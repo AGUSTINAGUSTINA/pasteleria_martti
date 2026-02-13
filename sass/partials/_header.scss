@@ -1,0 +1,187 @@
+@use 'variables' as *;
+
+
+
+
+/* ====== HEADER ====== */
+.header {
+  position: relative;
+  background-color: $blanco;
+  z-index: 100;
+}
+
+
+
+/* ====== NAV ====== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 80px;
+  padding: 0 2rem;
+
+  width: 100%;
+}
+
+
+
+/* ====== A LA IZQUIERDA ====== */
+.nav-left {
+  display: flex;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  a {
+    text-decoration: none;
+    color: $chocolate;
+    font-family: $p;
+    font-weight: $bold;
+    white-space: nowrap;
+  }
+}
+
+
+/* ====== A LA DERECHA ====== */
+.nav-actions {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 1rem;
+
+  .search-pill {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin: 0;
+    border: 1.5px solid $rosa-oscuro;
+    border-radius: 999px;
+    padding: 0.25rem 0.5rem;
+    background-color: transparent;
+    gap: 0.5rem;
+    max-width: 300px;
+  }
+
+  .search-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0.5rem 0.75rem;
+    font-family: $p;
+    font-size: 0.9rem;
+    width: 200px;
+    color: $negro;
+
+    &::placeholder {
+      color: $chocolate;
+    }
+  }
+
+  // LUPA
+
+  .search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background-color: #e7a29a;
+    cursor: pointer;
+
+    color: #5a3a2e;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: $rosa-oscuro;
+      color: #3f271d;
+    }
+  }
+
+  .icon-search {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+
+}
+
+//CARRITO
+
+/* BOTÓN CARRITO */
+.cart-button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ICONO CARRITO */
+.cart-icon {
+  width: 28px;
+  height: 28px;
+  color: $chocolate;
+}
+
+
+/* CONTADOR */
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $rosa-oscuro;
+  color: $chocolate;
+
+  font-family: $p;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  border-radius: 50%;
+}
+
+
+
+/* ====== LOGO FLOTANTE ====== */
+.logo-float {
+  position: absolute;
+  left: 50%;
+  bottom: -40px;
+  transform: translateX(-50%);
+
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+
+  img {
+    width: 60%;
+  }
+}

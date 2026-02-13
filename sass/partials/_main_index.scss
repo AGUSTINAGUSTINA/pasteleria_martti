@@ -1,0 +1,98 @@
+@use 'variables' as *;
+
+/* ===================== HERO ===================== */
+.hero {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+/* TEXTO CENTRADO EN HERO */
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+h1 {
+    font-family: $h;
+    font-size: 48px;
+    margin-bottom: 0.5rem;
+    color: $blanco;
+    text-align: center;
+  }
+  color: $blanco;
+  text-align: center;
+
+  /* RECTÁNGULO */
+  padding: 3rem 10rem;
+  border: 3px solid $blanco;
+  background-color: transparent;
+width: fit-content;   
+}
+
+.proyecto.descripcion {
+  max-width: 90%;
+  margin: 2rem auto;
+  padding: 0 2rem;
+
+  h2 {
+    font-family: $h;
+    font-size: 32px !important;
+    margin-bottom: 2rem;
+    color: $chocolate !important;
+    text-align: center;
+  }
+
+  p {
+    font-family: $p;
+    line-height: 1.6;
+    font-size: 18px;
+    color: $chocolate !important;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-family: $h;
+    font-size: 24px;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    margin-left: 1rem;
+    color: $chocolate;
+    text-align: left;
+  }
+
+  .conocimientos {
+    list-style-position: inside;
+    max-width: 90%;
+    text-align: left;
+    padding-left: 1rem;
+
+    li {
+      font-family: $p;
+      font-size: 16px;
+      line-height: 1.8;
+      color: $chocolate !important;
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+    }
+  }
+
+}

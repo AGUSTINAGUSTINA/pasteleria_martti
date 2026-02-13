@@ -1,0 +1,77 @@
+/* ========================= FOOTER =================================== */
+@use 'variables' as *;
+footer {
+  background-color: $rosa-claro;
+  color: $chocolate;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  position: relative;
+
+  // SECCIÓN
+  section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 20px;
+
+    // DIVISIONES DENTRO DE LA SECCIÓN
+    div {
+      flex: 1 50%;
+      margin: 10px;
+      flex-direction: column;
+      align-items: center;
+ 
+        img {
+          max-width: 259px;
+          height: 80%;
+          width: 80%;
+          align-items: center;
+        }
+      }
+      h3 {
+        text-align: left;
+        font-family: $h;
+        font-weight: normal;
+        font-size: 24px;
+        color: $chocolate;
+      }
+    
+  
+  p {
+    text-align: left;
+    margin-top: 8px;
+    font-size: 18px;
+    color: $chocolate;
+    display: block;
+    margin-bottom: 0;
+    font-family: $p;
+    font-weight: $regular;
+  }
+  }
+//REDES
+  .redes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+
+    .iconos {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      justify-content: center;
+      cursor: pointer;
+     margin: 8px;
+
+      .icono-redes {
+        width: 32px;
+        gap: 10px;
+      }
+    }
+  }
+}

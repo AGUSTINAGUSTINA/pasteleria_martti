@@ -1,0 +1,8 @@
+@use 'partials/variables' as *;
+//Reset
+@use 'partials/base';
+//Header & Footer
+@use 'partials/header';
+@use 'partials/footer' ;
+//Index
+@use 'partials/main_index' ;
