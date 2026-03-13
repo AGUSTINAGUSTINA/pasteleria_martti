@@ -1,0 +1,230 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Tartas | Martti</title>
+    <!-- Tipografía Trirong p/titulos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tipografía Manrope p/parrafo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Style Sheet -->
+    <link rel="stylesheet" href="../../../css/styles.css">
+
+
+</head>
+
+<body>
+
+
+
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-left">
+                <ul class="nav-links">
+                    <li><a href="../../../index.html">Inicio</a></li>
+                    <li><a href="../../nosotros.html">Nosotros</a></li>
+                    <li><a href="../../productos.html">Productos</a></li>
+                    <li><a href="../../contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-actions">
+                <div class="search-pill">
+                    <input type="search" class="search-input" placeholder="Buscar..." aria-label="Buscar">
+
+                    <button class="search-button" aria-label="Buscar">
+                        <svg class="icon-search" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7" />
+                            <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                        </svg>
+                    </button>
+                </div>
+
+
+                <button class="cart-button" aria-label="Carrito">
+                    <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.6 13h10.4l2-8H6"></path>
+                    </svg>
+
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- LOGO FLOTANTE -->
+        <div class="logo-float">
+            <img src="../../../assets/logo-martti.png" alt="Logo Martti">
+        </div>
+    </header>
+
+
+
+    <main>
+
+
+        <!-- TÍTULO TARTAS -->
+        <section class="products-grid-title">
+            <article class="product-card-title">
+                <img src="../../../assets/product/tartas.png" alt="Tartas">
+                <h1>Tartas</h1>
+            </article>
+        </section>
+
+        <!-- GALERÍA MINI TARTAS -->
+
+        <div class="producto-detalle">
+
+            <div class="galeria">
+                <img id="imagenPrincipal" src="../../../assets/product/mini-delicias/mini-tarta-zoom.jpg"
+                    class="imagen-grande">
+
+                <div class="miniaturas">
+                    <img src="../../../assets/product/mini-delicias/mini-tartas-zoom2.jpg" class="miniatura">
+                    <img src="../../../assets/product/mini-delicias/mini-tartas.jpg" class="miniatura">
+                </div>
+            </div>
+            <div class="info-producto">
+                <h2>Mini Tartas</h2>
+                <p>Versión miniatura de nuestras tartas clásicas, con la misma calidad y sabor en un formato más
+                    pequeño, ideal para compartir o disfrutar solo.</p>
+                <p> Elegí hasta cuatro variedades y diseñá tu combinación favorita.</p>
+                <h3>$4300</h3>
+                <div class="lingote-options">
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="lingote" class="opcion-checkbox" class="opcion-checkbox" value="key-lime">
+                                Key Lime Pie
+                            </label>
+                        </li>
+
+                        <li>
+                            <label>
+                                <input type="checkbox" name="lingote" class="opcion-checkbox" class="opcion-checkbox" value="maracuya">
+                                Maracuyá
+                            </label>
+                        </li>
+
+                        <li>
+                            <label>
+                                <input type="checkbox" name="lingote" class="opcion-checkbox" class="opcion-checkbox" value="ferrero">
+                                Ferrero Rocher
+                            </label>
+                        </li>
+
+                        <li>
+                            <label>
+                                <input type="checkbox" name="lingote" class="opcion-checkbox" class="opcion-checkbox" value="marquise">
+                                Marquise
+                            </label>
+                        </li>
+
+                        <li>
+                            <label>
+                                <input type="checkbox" name="lingote" class="opcion-checkbox" class="opcion-checkbox" value="tiramisu">
+                                Tiramisu
+                            </label>
+                        </li>
+
+                        <li>
+                            <label>
+                                <input type="checkbox" name="lingote" class="opcion-checkbox" class="opcion-checkbox" value="chocotorta">
+                                Chocotorta
+                            </label>
+                        </li>
+
+                        <li>
+                            <label>
+                                <input type="checkbox" name="lingote" class="opcion-checkbox" class="opcion-checkbox" value="matilda-blanca">
+                                Matilda Blanca
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+            <button type="button" data-action="add-to-cart" data-product="Mini Tartas" data-price="4300" data-category="otros">
+                Agregar al carrito
+            </button>
+
+        </div>
+
+
+
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+        <section class="footer-content">
+
+
+            <!-- CONTACTO -->
+
+            <div class="footer-block">
+                <h3>Contacto</h3>
+                <address>
+                    <p>Mail:</p>
+                    <p>Teléfono:</p>
+                </address>
+            </div>
+
+
+            <!-- UBICACIÓN -->
+
+            <div class="footer-block">
+                <h3>Ubicación</h3>
+                <div class="mapa-container">
+                    <iframe
+                        src="https://www.google.com/maps?q=San+Antonio+3892,+Manantiales,+Córdoba,+Argentina&output=embed"
+                        class="mapa-ubicacion" style="border:0;" allowfullscreen loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+
+            <!-- REDES -->
+
+            <div class="footer-block redes">
+                <h3>Seguinos en</h3>
+                <a href="https://www.instagram.com/martti.pasteleria/" target="_blank" rel="noopener">
+                    <img src="../../../assets/iconos/instagram.svg.png" alt="Instagram de Pastelería Martti"
+                        title="Instagram de Pastelería Martti" class="icono-redes">
+                </a>
+            </div>
+
+        </section>
+    </footer>
+
+    <!------ JS ------>
+
+    <script src="../../../js/main.js"></script>
+    <script src="../../../js/search.js"></script>
+    <script src="../../../js/cart.js"></script>
+    <script src="../../../js/ui/gallery.js"></script>
+    <script src="../../../js/ui/check-box.js"></script>
+
+
+</body>
+</html>

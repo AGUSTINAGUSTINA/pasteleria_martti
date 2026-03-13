@@ -85,24 +85,62 @@
 
         <!-- LOGO FLOTANTE -->
         <div class="logo-float">
-            <img src="./assets/logo-martti.png" alt="Logo Martti">
+            <img src="./assets/logos/logo-martti.png" alt="Logo Martti">
         </div>
 
     </header>
 
     <!-- HERO -->
     <main>
-        <section class="hero">
-            <img src="./assets/img-hero.png" alt="Imagen de fondo de una pavlova de Martti Pasteleria" class="hero-bg">
-            <div class="hero-overlay"></div>
+          <section class="hero">
+      <img src="./assets/img-hero.png" alt="Imagen de fondo de una pavlova de Martti Pasteleria" class="hero-bg">
+      <div class="hero-overlay"></div>
 
-            <div class="logo">
-                <h1>Pastelería Martti</h1>
-                <p class="author">by Pau Martino</p>
+      <div class="logo-content">
+        <h1> Te doy la bienvenida a Pastelería Martti</h1>
+        <p class="author">by Pau Martino</p>
+      </div>
+    </section>
+
+        <!-- FRASE -->
+
+        <section class="intro-text">
+            <h2>Somos Martti Pastelería</h2>
+            <p>
+                Aquí, cada postre es una obra artesanal, elaborada con ingredientes premium,
+                y cada taza de café es una invitación a disfrutar.
+            </p>
+        </section>
+
+
+        <!-- PRODUCTOS DESTACADOS -->
+
+        <section id="productos" class="featured-products">
+            <h2>Productos destacados</h2>
+
+            <div class="products-grid-featured">
+                <article class="product-card-featured">
+                    <div class="product-label-featured">Pan Dulce Dubai</div>
+                    <img src="./assets/features-product/pan-dulce-dubai.png" alt="Pan Dulce Dubai">
+                </article>
+
+                <article class="product-card-featured">
+                    <div class="product-label-featured">Petit Fours</div>
+                    <img src="./assets/features-product/box-bocaditos.png" alt="Box Bocaditos">
+                </article>
+
+                <article class="product-card-featured">
+                    <div class="product-label-featured">Pavlova</div>
+                    <img src="./assets/features-product/pavlova.png" alt="Pavlova">
+                </article>
             </div>
         </section>
 
-        <!-- DESCRIPCIÓN DEL PROYECTO -->
+    </main>
+
+
+    <!-- DESCRIPCIÓN DEL PROYECTO: SE ELIMINA PARA DAR LUGAR A LA SECCIONES 
+             CORRESPONDIENTES AL INDEX DEL PROYECTO
         <section class="proyecto descripcion">
             <div class="description">
                 <h2>Proyecto: Pastelería Martti</h2>
@@ -137,12 +175,7 @@
 
             </div>
         </section>
-
-
-    </main>
-
-
-
+  FIN DE LA DESCRIPCIÓN  -->
 
     <!-- FOOTER -->
 
@@ -180,7 +213,7 @@
             <div class="footer-block redes">
                 <h3>Seguinos en</h3>
                 <a href="https://www.instagram.com/martti.pasteleria/" target="_blank" rel="noopener">
-                    <img src="assets/instagram.svg.png" alt="Instagram de Pastelería Martti"
+                    <img src="assets/iconos/instagram.svg.png" alt="Instagram de Pastelería Martti"
                         title="Instagram de Pastelería Martti" class="icono-redes">
                 </a>
             </div>
@@ -205,8 +238,8 @@
     <!------ JS ------>
 
     <script src="./js/main.js"></script>
-    <script src="./js/search.js"></script>
     <script src="./js/cart.js"></script>
+    <script src="./js/search.js"></script>
 
 </body>
 

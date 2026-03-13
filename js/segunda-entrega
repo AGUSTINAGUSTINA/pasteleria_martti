@@ -1,0 +1,115 @@
+Para esta entrega modifiqué el código: reemplazando alert, prompt y console.log para aplicar lo 
+aprendido en las últimas clases. Deje un alert por ejemplo para avisarle al usuario que no puede
+elegir mas de 4 variedades en el archivo html de lingotes.html, petit-fours.html y mini-tartas.html
+Ahora todo se maneja desde el DOM (buscador y carrito) y las funciones trabajan sobre elementos 
+del DOM.
+Por otra parte, creé varios archivos HTML para hacer la web más real; todavía no están todos 
+terminados y los completaré en la próxima entrega.
+
+- Funciones tradicionales (function):
+  a) Para la búsqueda por categoría y por nombre (ya directamente desde el buscador)
+  b) Para normalizar texto
+  c) Para renderizar resultados en cards y drawer
+  d) Para crear drawer y modal
+  e) Para agregar / eliminar productos
+  f) Para guardar y cargar carrito
+
+- Funciones flecha (=>) anónimas:
+  a) => En check-box.js: para manejar cambios en checkboxes y actualizar el estado
+  b) => En gallery.js`: para recorrer miniaturas y actualizar la imagen principal
+- Funciones constructoras (objeto):
+  a) Cree la clase Producto para definir la estructura de cada producto (nombre y precio).
+
+- Uso de metodos de orden superior (funciones con callback):
+  - forEach -> recorre un array y ejecuta una accion por cada elemento.
+     - En cart.js:
+          a) actualizarContadorCarrito()
+          b) crearIndiceCatalogo()
+          c) sincronizarPreciosDesdeCatalogo()
+          d) obtenerOpcionesSeleccionadas()
+          e) crearMensajeFinalizarCompraWhatsApp()
+     - En search.js:
+          a) obtenerTodosLosProductos()
+          b) combinarSinDuplicados()
+     - En check-box.js:
+          a) listener de checkboxes
+     - En gallery.js:
+          a) recorrido de miniaturas
+  - map -> transforma cada elemento y devuelve un nuevo array con los resultados.
+     - En cart.js:
+          a) renderDrawerCarrito()
+          b) renderModalFinalizarCompra()
+     - En search.js:
+          a) buscarPorCategoria()
+          b) buscarPorNombre()
+          c) renderResultadosEnCards()
+          d) renderResultadosEnDrawer()
+  - reduce -> acumula los elementos en un solo valor (total del carrito).
+     - En cart.js:
+          a) calcularTotalCarrito()
+
+- Métodos de string:
+  - toLowerCase
+  - toUpperCase
+  - normalize("NFD")
+  - trim
+  - replace
+
+- Métodos de array:
+  - forEach
+  - push
+  - join
+  - map
+  - includes
+  - length
+  - slice
+  - reduce
+
+- Objetos:
+  - Object.keys: lo utilicé para obtener las claves de un objeto (por ejemplo, las categorías del 
+  catálogo).
+  - Object.values: lo utilicé para obtener los valores de un objeto (por ejemplo, para devolver 
+  listas sin duplicados)
+  - Array.isArray: lo utilicé para verificar si un valor es un array antes de recorrerlo.
+  - Number(): lo utilicé para convertir un valor a número para evitar errores al calcular precios.
+
+- JSON y almacenamiento:
+  - localStorage.getItem / setItem: guardar y recuperar el carrito
+  - JSON.stringify: convertir el carrito en texto
+  - JSON.parse: convertir el texto en array
+
+- Formato de números (para facilitar la lectura del usuario, tomado de MDN):
+  - Intl.NumberFormat: mostrar precios con separador de miles usando punto
+
+- DOM y eventos:
+  - querySelector / querySelectorAll: para seleccionar elementos del DOM
+  - createElement: para crear elementos nuevos desde JS
+  - innerHTML: para insertar HTML dentro de un elemento
+  - textContent: para insertar texto dentro de un elemento
+  - appendChild: para agregar un elemento dentro de otro
+  - classList: para agregar o quitar clases CSS
+  - addEventListener: para escuchar eventos (click, input, submit, etc.)
+  - setAttribute: para agregar atributos al elemento
+  - closest: para buscar el contenedor más cercano
+  - dataset: para leer y escribir datos en atributos data-*
+  - preventDefault: para evitar el comportamiento por defecto (ej. submit)
+  - stopPropagation: para evitar que el evento siga subiendo en el DOM
+
+- Operadores lógicos:
+  - NOT (!)
+  - OR (||)
+
+- Operadores relacionales:
+  - Comparación estricta (===)
+
+- Condicionales:
+  - if
+  - if/else
+
+- Bucles:
+  - for...of
+  - while
+
+- Sentencias:
+  - break
+  - return

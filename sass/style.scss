@@ -1,4 +1,5 @@
 @use 'partials/variables' as *;
+@use 'partials/mixins' ;
 //Reset
 @use 'partials/base';
 //Header & Footer
@@ -6,3 +7,19 @@
 @use 'partials/footer' ;
 //Index
 @use 'partials/main_index' ;
+//Pages
+@use 'partials/main_nosotros' ;
+@use 'partials/main_productos_category' ;
+@use 'partials/main_contacto' ;
+
+//Productos
+@use 'partials/cards' ;
+@use 'partials/main_product_item';
+
+//Media Queries
+@use 'partials/mediaq' ;
+//Botones
+//Radio Button
+@use 'partials/radio_button' ;
+//Whatsapp Button
+@use 'partials/_whatsapp_button' ;

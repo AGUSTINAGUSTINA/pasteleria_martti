@@ -1,5 +1,6 @@
 /* ========================= FOOTER =================================== */
 @use 'variables' as *;
+@use 'mixins' as *;
 footer {
   background-color: $rosa-claro;
   color: $chocolate;

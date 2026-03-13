@@ -1,0 +1,100 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+.producto-detalle {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+
+  .galeria {
+    width: 50%;
+    align-items: center;
+    padding-left: 15%;
+
+    .imagen-grande {
+      width: 65%;
+      height: 65%;
+      border-radius: 10px;
+    }
+
+    .miniaturas {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+
+      .miniatura {
+        width: 80px;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
+  .info-producto {
+    width: 50%;
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: $p;
+      font-size: 1rem;
+      font-weight: $semibold;
+      color: $chocolate;
+      background-color: $rosa-claro;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        background-color: $rosa-oscuro;
+        color: $chocolate;
+        font-weight: $bold;
+      }
+    }
+  }
+}
+
+.lingote-options {
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  input[type="checkbox"] {
+    accent-color: $rosa-oscuro;
+    cursor: pointer;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+}

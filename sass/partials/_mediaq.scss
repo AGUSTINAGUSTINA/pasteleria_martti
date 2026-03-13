@@ -1,0 +1,95 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Media queries y utilidades responsivas (mobile / tablet)
+
+// Contenedores y multimedia
+.container {
+  max-width: $desktop;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+img, video, .media {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Tipografía base (ajustable por breakpoints abajo)
+h1 { font-family: $h; font-size: $size-h1; line-height: 1.1; }
+h2 { font-family: $h; font-size: $size-h2; }
+h3 { font-family: $h; font-size: $size-h3; }
+p, li, a { font-family: $p; font-size: $size-p; }
+
+// Grids comunes
+.grid-products { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+.gallery { display: grid; gap: 0.75rem; grid-template-columns: repeat(4, 1fr); }
+
+// Utilidades para mostrar/ocultar según dispositivo
+.hide-mobile { @include mobile { display: none !important; } }
+.hide-tablet { @include tablet { display: none !important; } }
+.show-mobile { display: none; @include mobile { display: block !important; } }
+.desktop-only { @include mobile { display: none !important; } }
+.mobile-only { display: none; @include mobile { display: block !important; } }
+
+// Ajustes para Tablet
+@include tablet {
+  .container { max-width: 900px; padding: 0 1rem; }
+  h1 { font-size: 34px; }
+  h2 { font-size: 28px; }
+  p { font-size: 17px; }
+  .grid-products { grid-template-columns: repeat(2, 1fr); }
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+  .header-nav { display: flex; justify-content: space-between; align-items: center; }
+  .product-card { padding: 0.8rem; }
+}
+
+// Ajustes para Mobile
+@include mobile {
+  .container { padding: 0 0.75rem; }
+  h1 { font-size: 28px; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 18px; }
+  p { font-size: 16px; }
+
+  // Productos: evitar overflow y columnas fijas
+  .product-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .product-card { width: 100% !important; max-width: 420px; height: auto !important; padding: 0.6rem; margin: 0 auto; }
+  .product-card img { height: auto; object-fit: cover; }
+  .product-card-title { height: auto; min-height: 180px; }
+  .product-label, .product-label-featured { width: auto; left: 50%; transform: translateX(-50%); padding: 0.5rem 1rem; }
+
+  // Productos destacados / grid
+  .grid-products { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .products-grid-featured { gap: 1rem; }
+  .product-card-featured { width: 100%; max-width: 360px; margin: 0 auto; }
+
+  // Hero / logo content
+  .logo-content { padding: 1.2rem 1.5rem; border-width: 2px; }
+  .intro-text { margin: 2rem auto; padding: 0 1rem; }
+  .intro-text h2 { font-size: 28px; }
+
+  // Detalle de producto: apilar en móvil
+  .producto-detalle { flex-direction: column; gap: 16px; padding: 16px; }
+  .producto-detalle .galeria { width: 100%; padding-left: 0; }
+  .producto-detalle .galeria .imagen-grande { width: 100%; height: auto; }
+  .producto-detalle .info-producto { width: 100%; }
+
+  // Cabeceras y navegación
+  .header-nav { flex-direction: column; gap: 0.5rem; align-items: stretch; }
+  nav .menu { display: block; }
+
+  // Footer y utilidades
+  .footer { text-align: center; }
+  .desktop-only { display: none !important; }
+  .mobile-only { display: block !important; }
+
+  // Evitar márgenes derechos inesperados (por si hay containers fijos)
+  body, html { overflow-x: hidden; }
+}
+
+// Ejemplo de tipografía fluida para párrafos
+:root { --fluid-scale: clamp(14px, 1.8vw, 18px); }
+p { font-size: var(--fluid-scale); }
