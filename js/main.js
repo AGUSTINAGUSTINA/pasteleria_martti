@@ -1,9 +1,13 @@
 // MAIN.JS
 
 /*
+
+PASTELERIA MARTTI es la pasteleria de una amiga que me brindó su logo y fotos de los productos para
+el proyecto.
+
 En este archivo defino las categorias y sus productos.
 Entrada: datos de productos definidos en este archivo.
-Proceso: creación de objetos Producto agrupados por categoria.
+Proceso: creación de objetos Producto agrupados por categoria cons su nombre y precio.
 Salida: objeto pasteleriaMartti listo para usar en el proyecto.
 */
 
@@ -115,7 +119,8 @@ const otrosProductos = [
   new Producto("Lingotes", 43000),
   new Producto("Mini Tartas", 43000),
   new Producto("Huevos de Pascua", 28000),
-  new Producto("Pan dulce", 28000),
+  new Producto("Pan dulce Dubai", 28000),
+  new Producto("Pan dulce Nutella", 28000),
   new Producto("Cookies New York", 3400),
   new Producto("Cookies Red Velvet", 3400),
   new Producto("Chipa", 2900),

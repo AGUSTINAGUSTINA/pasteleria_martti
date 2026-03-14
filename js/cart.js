@@ -9,10 +9,8 @@ console.log("Carrito de Pasteleria Martti (DOM)");
 
 
 /*
-En este archivo muestro el flujo de compra en el DOM:
-Entrada: acciones del usuario (clicks), datos del catalogo y localStorage.
-Proceso: cargar/guardar carrito, sincronizar precios, renderizar drawer y modal, y manejar eventos.
-Salida: UI del carrito actualizada y flujo de compra hasta finalizar la compra.
+Para ir dandome cuenta de las funciones necesarias decclare todo el proceso de esta manera:
+Primero definí variables globales 
 */
 
 
@@ -24,10 +22,15 @@ let uiCarrito = null;
 let uiFinalizarCompra = null;
 const numWhatsapp = "5493512729694";
 
+
+
 /*
+
+
+
 Defini estas variables globales para poder utilizarla en varias funciones de este archivo:
 
-claveStorageCarrito: es el nombre con el que guardo y leo el carrito en localStorage.
+claveStorageCarrito: es el nombre con el que guardo y recupero los datos del carrito en localStorage.
 
 carrito = []: arranca vacio y despues se llena con lo que haya en localStorage o con lo que 
 agrega el usuario. 
@@ -37,33 +40,43 @@ el DOM. Lo defini con null porque todavia no existe al cargar el script.
 
 uiFinalizarCompra = null: igual que uiCarrito, pero para el modal y resumen de finalizar la compra.
 
-numWhatsapp: es el numero al que se envia el pedido, de esta manera, si cambia, lo 
-puedo editar desde aca directamente.
+numWhatsapp: es el numero al que se envia el pedidoo. Como la pastelería no cuenta con stock por ser pequeña
+y tener productos frescos, la venta culmina por whatsapp para corroborar que los productos esten disponibles
+para vender.
+
+
+Con las variables globales ya voy dando forma al flujo como donde voy a guardaro los datos que 
+el usuario va agregando al carrito, y al finalizar la compra a que numero le voy a enviar el pedido.
+
+Luego para el flujo de compra en el DOM planifiqué lo siguiente:
+Entrada: acciones del usuario , datos del catalogo de productos y localStorage.
+Proceso: cargar/guardar carrito, sincronizar precios, renderizar drawer y modal, y manejar eventos.
+Salida: contador del carrito, UI del carrito actualizada y flujo de compra hasta finalizar la compra.
+
+Por supuesto que sobre la marcha fuí modificando funciones y agregando otras para que el carrito quede 
+funcional
 
 */
+
+
 
 /*
 Siguiendo con la logica de mi proyecto, ordene las funciones en dos bloques:
 
-1) Logica para procesar el carrito y UI:
+1) Logica para procesar el carrito y como se va a mostrar:
 
-  a) Cargar el carrito desde localStorage (cargarCarrito)
-  b) Guardar el carrito en localStorage cada vez que se modifica (guardarCarrito)
-  c) Actualizar el contador del carrito en el DOM (actualizarContadorCarrito)
-  d) Actualizar la vista del carrito (actualizarVistaCarrito)
-  e) Formatear los precios a moneda local (formatearMoneda)
-  f) Sincronizar los precios desde el catalogo (sincronizarPreciosDesdeCatalogo)
-  g) Crear el drawer del carrito (crearDrawerCarrito)
-  h) Crear el modal de finalizacion de compra (crearModalFinalizarCompra)
-  i) Renderizar el contenido del drawer y modal (renderDrawerCarrito, renderModalFinalizarCompra)
+a) Guarda lo que el usuario agrega (aunque recargue, para eso utilizo localStorage).
+b) Muestra ese carrito en pantalla (contador, drawer y modal).
+c) Permite eliminar y finalizar por WhatsApp.
+
 
 2) Logica de interaccion del usuario.
 
-  a) Agregar productos al carrito (agregarAlCarrito)
-  b) Abrir y cerrar el drawer (abrirDrawerCarrito, cerrarDrawerCarrito)
-  c) Abrir y cerrar el modal (abrirModalFinalizarCompra, cerrarModalFinalizarCompra)
-  d) Eliminar productos del carrito (eliminarDelCarrito)
-  e) Comprar por WhatsApp (comprarPorWhatsApp)
+a) Agrega productos al carrito cuando el usuario hace click en “Agregar al carrito”.
+b) Abre y cierra el drawer para ver lo que hay en el carrito.
+c) Abre y cierra el modal para mostrar el resumen antes de comprar.
+d) Permite eliminar productos del carrito si el usuario se arrepiente.
+e) Envía el pedido por WhatsApp con el resumen de la compra.
 
 */
 
@@ -177,7 +190,7 @@ function formatearMoneda(numero) {
 
 /*
 Busque en MDN como mostrar numeros con separador de miles para que se lean mas rapido.
-Uso `Intl.NumberFormat("es-AR")` porque en Argentina el separador de miles es el punto.
+Uso -> Intl.NumberFormat("es-AR") <- porque en Argentina el separador de miles es el punto.
 Esto ayuda a que el usuario no tenga que detenerse a interpretar el numero.
 Si el valor no es valido, lo convierto a 0 para evitar errores.
 */
@@ -198,14 +211,14 @@ function claveProducto(texto) {
 
 /*
 En esta funcion preparo un texto para usarlo como "clave" de busqueda o comparacion.
-La idea es que quede limpio, sin acentos, en minusculas y sin espacios extra.
+La idea es que quede sin acentos, en minusculas y sin espacios extra.
 
-Paso a paso:
-- String(texto || ""): aseguro que siempre sea un texto.
-- normalize("NFD"): separo las letras de sus acentos.
-- replace(/[\u0300-\u036f]/g, ""): elimino los acentos.
-- toLowerCase(): paso todo a minusculas.
-- trim(): saco espacios al inicio y al final.
+Pars esto utilicé:
+- String(texto || ""): para asegurarme que siempre sea un texto.
+- normalize("NFD"): para separar las letras de sus acentos.
+- replace(/[\u0300-\u036f]/g, ""): para eliminar los acentos.
+- toLowerCase(): para pasar todo a minusculas.
+- trim(): para sacar espacios al inicio y al final.
 */
 
 //FUNCION PARA CREAR UN INDICE DE PRODUCTOS DESDE EL CATALOGO (pasteleriaMartti.productos)
@@ -235,15 +248,19 @@ function crearIndiceCatalogo() {
 }
 
 /*
+Para la logica de busqueda, uso el indice creado en la funcion anterior. Quise buscar la forma
+mas rapida a nivel experiencia de usario y ayudandome un poco con la informacion de la documentacion en mdn y 
+chat gpt, decidí hacerlo de esta manera, asi no tengo que recorrer todo el catalogo cada vez. 
+Entonces:
 En esta funcion creo un "indice" (objeto) para buscar productos mas rapido.
 Recorro las categorias y guardo cada producto con una clave normalizada.
-
 Para esto:
 1) Creo un objeto vacio -> indice.
 2) Si no existe pasteleriaMartti o no tiene productos, devuelvo el objeto vacio.
-3) Recorro las categorias ->Object.keys(...).forEach.
-4) Para cada categoria, tomo su lista de productos (si no es array, uso []).
-5) Recorro cada producto y genero una clave ->claveProducto.
+   -Uso typeof pasteleriaMartti === "undefined" para evitar errores si el objeto no existe.
+3) Recorro las categorias -> Object.keys con forEach.
+4) Para cada categoria, tomo su lista de productos.
+5) Recorro cada producto y genero una clave -> claveProducto.
 6) Guardo en el indice los datos: nombre, precio y categoria.
 */
 

@@ -4,7 +4,7 @@ elegir mas de 4 variedades en el archivo html de lingotes.html, petit-fours.html
 Ahora todo se maneja desde el DOM (buscador y carrito) y las funciones trabajan sobre elementos 
 del DOM.
 Por otra parte, creé varios archivos HTML para hacer la web más real; todavía no están todos 
-terminados y los completaré en la próxima entrega.
+terminados y los completaré en la próxima entrega. Además falta que sea 100% responsive.
 
 - Funciones tradicionales (function):
   a) Para la búsqueda por categoría y por nombre (ya directamente desde el buscador)

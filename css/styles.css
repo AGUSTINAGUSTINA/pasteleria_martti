@@ -936,8 +936,8 @@ footer .redes .iconos .icono-redes {
   margin-bottom: 15px;
 }
 .nosotros-values .values-grid .value-card .value-icon img {
-  width: 72px;
-  height: 72px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   display: block;
 }
@@ -1657,6 +1657,13 @@ footer .redes .iconos .icono-redes {
   transform: translateY(-6px);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
   border-radius: 10px;
+}
+
+/* Centrado especial para pan dulce (2 cards) */
+#pan-dulce .product-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 700px;
+  margin: 0 auto;
 }
 .product-card img {
   width: 100%;
