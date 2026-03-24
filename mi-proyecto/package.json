@@ -1,0 +1,11 @@
+{
+  "name": "mi-proyecto",
+  "version": "1.0.0",
+  "description": "Este es un proyecto inicializado con NPM",
+  "main": "index.js",
+"scripts": {
+  "sass": "sass ../sass/style.scss ../css/styles.css --watch"
+},
+  "author": "Zamora Agustina",
+  "license": "ISC"
+}

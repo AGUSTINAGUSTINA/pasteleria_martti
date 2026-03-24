@@ -1,8 +1,6 @@
 // FUNCION DE CONTACTO: ENVIAR FORMULARIO
 
 
-
-
 // FUNCION PARA MOSTRAR UN DIALOGO EN CONTACTO
 
 function mostrarDialogoContacto(mensaje) {
@@ -34,7 +32,6 @@ function mostrarDialogoContacto(mensaje) {
 }
 
 
-
 // FUNCION PARA ENVIAR EL FORMULARIO POR WHATSAPP
 
 function enviarWhatsApp() {
@@ -44,7 +41,6 @@ function enviarWhatsApp() {
   const asunto = document.getElementById('asunto').value;
   const mensaje = document.getElementById('mensaje').value;
 
-  
 
   if (!nombre || !email || !asunto || !mensaje) {
     mostrarDialogoContacto('Por favor completa los campos requeridos');
@@ -64,7 +60,6 @@ if (botonWhatsApp) {
     enviarWhatsApp();
   });
 }
-
 
 
 // Limpiar el formulario despues de enviar
