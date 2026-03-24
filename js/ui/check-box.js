@@ -1,9 +1,5 @@
 //FUNCION PARA EVITAR QUE SE ELEGAN MAS DE 4 VARIEDADES
-/*
-Entrada: cambios en checkboxes del usuario.
-Proceso: cuenta los seleccionados y limita a 4.
-Resultado: muestra dialogo si supera el limite.
-*/
+
 const checkboxes = document.querySelectorAll(".opcion-checkbox");
 
 //FUNCION PARA MOSTRAR UN DIALOGO DE LIMITE
@@ -46,10 +42,5 @@ checkboxes.forEach((checkbox) => {
   });
 });
 
-/*
-Esta funcion evita que se elijan mas de 4 variedades.
-1) Busca todos los checkbox con la clase "opcion-checkbox".
-2) Agrega un listener "change" a cada checkbox.
-3) Cuenta los seleccionados.
-4) Si pasan de 4, desmarca el ultimo y muestra el dialogo.
-*/
+
+

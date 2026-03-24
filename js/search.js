@@ -1,25 +1,12 @@
 // SEARCH.JS
 
-//PUNTO DE PARTIDA DEL BUSCADOR MOSTRADO POR CONSOLA
 console.log("Buscador de Pasteleria Martti");
-//Lo muestro por consola para verificar que el archivo se esta cargando correctamente.
 
-/*
-En este archivo muestro el flujo de busqueda en el DOM:
-Entrada: lo que el usuario escribe en el buscador.
-Proceso: se normaliza el texto y se ejecuta la busqueda por categoria y por nombre.
-Salida: se muestran los resultados de busqueda en el DOM (cards o drawer y modal).
-*/
+
 
 
 //FUNCIONES DE NORMALIZACION DE TEXTO 
-/*
-Utilice esta funcion porque al simular una busqueda como un usuario, me di cuenta que
-un usuario podria escribir "chipa" en vez de "Chipa" que es como lo tengo escrito en 
-mi array. Al normalizar el texto evito fricciones en la busqueda.
-En la entrega anterior ya habia utilizado la normalizacion de texto pero agregue 
-algunos metodos adicionales para mejorar la experiencia de busqueda.
-*/
+
 
 function normalizarTexto(texto) {
   return String(texto || "")
@@ -29,72 +16,26 @@ function normalizarTexto(texto) {
     .trim();
 }
 
-/*
-Entrada: texto (string).
-Proceso: normaliza el texto para evitar errores por mayusculas, acentos o espacios.
-Salida: texto normalizado (string).
-*/
 
-/*
 
-UTILICE ESTOS METODOS DE STRING QUE FIGURAN EN LA DOCUMENTACION DE MDN:
-- normalize("NFD": para descomponer caracteres acentuados en su forma base + acento.
-- replace(/[\u0300-\u036f]/g, ""): para eliminar los caracteres de acento resultantes.
-- toLowerCase(): para convertir todo a minusculas y evitar problemas de mayusculas/minusculas.
-- trim(): para eliminar espacios en blanco al inicio y al final del texto.
 
-*/
 
-//aQUI YA EMPIEZA EL CODIGO DEL BUSCADOR EN SI APLICANDO MODIFICACION DEL DOM.
 
 //FUNCION PARA OBTENER LA RUTA BASE DEL PROYECTO
-/* 
-Para Obtener la ruta base del proyecto para construir enlaces correctos desde 
-cualquier pagina, utilice la siguiente funcion: 
-*/
+
 function obtenerBaseProyecto() {
   let script = document.querySelector('script[src$="js/search.js"]');
   if (!script) return "";
   return script.getAttribute("src").replace(/js\/search\.js$/, "");
 }
 
-/*
-Entrada: no recibe parametros.
-Proceso: busca el script de search.js y calcula la ruta base.
-Salida: ruta base como string.
-*/
 
-/*
-Esta funcion me permite calcular la ruta base del proyecto segun desde que pagina se cargo
-search.js:
-1) Busca la etiqueta <script> que carga js/search.js.
-2) Obtiene el atributo src de esa etiqueta.
-3) Reemplaza "js/search.js" con "". Esto devuelve la ruta base del proyecto, 
-como "https://www.pasteleriamartti.com/" o "../" dependiendo de la ubicacion de la pagina.
 
-- querySelector es un metodo del DOM, que segun la documentacion MDN, devuelve el 
-primer elemento que coincide con el selector CSS. En este caso, busca un elemento 
-<script> cuyo atributo src termine con "js/search.js". Esto es util para encontrar la 
-ruta correcta del proyecto sin importar desde que pagina se cargue el script.
 
-- getAttribute es un metodo del DOM que obtiene el valor de un atributo de un elemento 
-del DOM. En este caso, obtiene el valor del atributo src de la etiqueta <script> encontrada
-
-- replace es un metodo de las cadenas de texto que reemplaza una parte de la cadena con 
-otra. En este caso, reemplaza "js/search.js" con "". Esto devuelve la ruta base del 
-proyecto, como "https://www.pasteleriamartti.com/" o "../" dependiendo de la ubicacion 
-de la pagina.
-*/
 
 
 //FUNCION PARA OBTENER LAS CATEGORIAS
-/*
-defini la funcion mostrarCategorias() para obtener las categorias disponibles de la 
-pasteleria antes de ejecutar la busqueda.
-primero verifico que el objeto pasteleriaMartti exista y que tambien tenga la propiedad 
-productos antes de intentar usarlo. Si alguno de esos datos no esta disponible, la funcion 
-devuelve un array vacio para evitar que el codigo se rompa.
-*/
+
 
 
 function mostrarCategorias() {
@@ -105,48 +46,21 @@ function mostrarCategorias() {
   return Object.keys(pasteleriaMartti.productos);
 }
 
-/*
-Entrada: no recibe parametros.
-Proceso: valida que exista pasteleriaMartti y devuelve sus categorias.
-Salida: array de categorias (strings).
-*/
 
-/*
-- Object.keys() devuelve las claves del objeto productos, que en este caso son las
-categorias del catalogo (ej: tartas, tortas, postres, otros).
--> Esta funcion es la base para la busqueda por categoria.
 
-- typeof (segun MDN) devuelve el tipo de dato de una variable.Lo utilice para verificar
- si pasteleriaMartti existe. Si no existe o no tiene productos, devuelvo un array vacio,
-lo que indica que no hay categorias disponibles.
-*/
+
 
 //FUNCION PARA OBTENER TODOS LOS PRODUCTOS DE TODAS LAS CATEGORIAS
 
-/*En esta funcion obtenerTodosLosProductos() arme un listado general con todos los 
-productos del proyecto, sin importar su categoria. Primero invoco la funcion 
-mostrarCategorias() para obtener las categorias disponibles y creo un array vacio productos
-donde se va a guardar el resultado final.
-*/
+
 
 function obtenerTodosLosProductos() {
   let categorias = mostrarCategorias();
   let productos = [];
-/*
-- forEach: lo uso para recorrer cada categoria. En cada vuelta accedo a su lista de 
-productos con:pasteleriaMartti.productos[categoria] OR []
-- || []: lo aplico como respaldo por si una categoria no tiene productos, asi no se rompe 
-el recorrido.
- */
+
   categorias.forEach(function (categoria) {
     let lista = pasteleriaMartti.productos[categoria] || [];
-/*
-Dentro de esa lista vuelvo a usar forEach para recorrer producto por producto, y con push 
-agrego al array final un nuevo objeto con:
-- nombre
-- precio (convertido a numero con Number, y si falla queda 0)
-- categoria (para saber a que grupo pertenece)
-*/
+
     
     lista.forEach(function (producto) {
       productos.push({
@@ -160,23 +74,12 @@ agrego al array final un nuevo objeto con:
   return productos;
 }
 
-/*
-Entrada: no recibe parametros.
-Proceso: recorre todas las categorias y arma un array con todos los productos.
-Salida: array de productos con nombre, precio y categoria.
-*/
+
 
 
 // FUNCION DE BSUQUEDA POR CATEGORIA 
 
-/*
-implemente la busqueda de categorias segun lo que escribe el usuario en el buscador.
-1) normalizo el texto de busqueda para evitar problemas con mayusculas, acentos o espacios.
-2) Obtengo la lista de categorias disponibles con mostrarCategorias().
-- filter: lo uso para quedarme solo con las categorias que incluyen el texto de busqueda 
-(tambien normalizado).
-- map: lo uso para transformar cada categoria encontrada en un objeto con tipo "categoria", su nombre y su categoria (que en este caso es lo mismo que el nombre).
-*/
+
 function buscarPorCategoria(busqueda) {
   let termino = normalizarTexto(busqueda);
   let categorias = mostrarCategorias();
@@ -194,37 +97,13 @@ function buscarPorCategoria(busqueda) {
     });
 }
 
-/*
-Entrada: busqueda (string).
-Proceso: normaliza el texto y filtra categorias que coincidan.
-Salida: array de objetos con tipo categoria.
-*/
 
-/*
-Aqui utilice:
-- filter: que es un metodo de las cadenas de texto que devuelve un nuevo array con los 
-elementos del array original que cumplen una condicion especifica. En este caso, se 
-utiliza para quedarme solo con las categorias que incluyan el texto de busqueda 
-(tambien normalizado).
 
-- includes: que es un metodo string lo uso para verificar si la categoria actual 
-incluye el texto de busqueda
 
-- map: lo uso para transformar cada categoria encontrada en un objeto con tipo "categoria", 
-su nombre y su categoria.
-*/
 
 // FUNCION DE BUSQUEDA POR NOMBRE
 
-/*
-implemente la busqueda por nombre de producto de forma similar a la de categorias, 
-pero esta vez se utilizo el array de productos que contiene el listado completo de 
-productos obtenido con obtenerTodosLosProductos().
-- filter: lo uso para quedarme solo con los productos cuyo nombre incluye el texto de 
-busqueda (tambien normalizado).
-- map: lo uso para transformar cada producto encontrado en un objeto con tipo "producto", 
-su nombre, precio y categoria.
-*/
+
 function buscarPorNombre(busqueda) {
   let termino = normalizarTexto(busqueda);
   let productos = obtenerTodosLosProductos();
@@ -243,22 +122,10 @@ function buscarPorNombre(busqueda) {
     });
 }
 
-/*
-Entrada: busqueda (string).
-Proceso: normaliza el texto y filtra productos que coincidan.
-Salida: array de objetos con tipo producto.
-*/
+
 // FUNCIONES PARA OBTENER LAS RUTAS DE CATEGORIAS Y PRODUCTOS
 
-/*
-Para construir los enlaces correctos a las paginas de categorias y productos, defini 
-las funciones rutaCategoria() y rutaProducto() que utilizan la funcion obtenerBaseProyecto() 
-para calcular la ruta base del proyecto y luego agregan la ruta especifica segun la categoria 
-o el producto.
-- En rutaCategoria(), se utiliza un mapa de categorias a rutas especificas. Si la categoria no 
-esta en el mapa, se devuelve una ruta generica a productos.
-- En rutaProducto(), se utiliza un mapa de nombres de productos normalizados a rutas especificas. Si el producto no esta en el mapa, se llama a rutaCategoria() para obtener la ruta de su categoria como respaldo.
-*/
+
 
 function rutaCategoria(categoria) {
   let base = obtenerBaseProyecto();
@@ -272,36 +139,12 @@ function rutaCategoria(categoria) {
   return base + (mapa[categoria] || "pages/productos.html");
 }
 
-/*
-Entrada: categoria (string).
-Proceso: busca la ruta en el mapa o usa una ruta generica.
-Salida: ruta completa como string.
-*/
-
-/*
-Esta funcion me permite calcular la ruta base del proyecto segun desde que pagina se cargo
-search.js:
-1) Busca la etiqueta <script> que carga js/search.js.
-2) Obtiene el atributo src de esa etiqueta.
-3) Reemplaza "js/search.js" con "". Esto devuelve la ruta base del proyecto, 
-como "https://www.pasteleriamartti.com/" o "../" dependiendo de la ubicacion de la pagina.
-
-- querySelector es un metodo del DOM, que segun la documentacion MDN, devuelve el 
-primer elemento que coincide con el selector CSS. En este caso, busca un elemento 
-<script> cuyo atributo src termine con "js/search.js". Esto es util para encontrar la 
-ruta correcta del proyecto sin importar desde que pagina se cargue el script.
-
-- getAttribute es un metodo del DOM que obtiene el valor de un atributo de un elemento 
-del DOM. En este caso, obtiene el valor del atributo src de la etiqueta <script> encontrada
-
-- replace es un metodo de las cadenas de texto que reemplaza una parte de la cadena con 
-otra. En este caso, reemplaza "js/search.js" con "". Esto devuelve la ruta base del 
-proyecto, como "https://www.pasteleriamartti.com/" o "../" dependiendo de la ubicacion 
-de la pagina.
-*/
 
 
-//FUNCION PARA OBTENER LA RUTA DE UN PRODUCTO (las dividí nombrando las categorias para no olvidarme de ninguna)
+
+
+
+//FUNCION PARA OBTENER LA RUTA DE UN PRODUCTO
 function rutaProducto(item) {
   let base = obtenerBaseProyecto();
   let key = normalizarTexto(item.nombre);
@@ -363,22 +206,8 @@ function rutaProducto(item) {
   if (mapa[key]) return base + mapa[key];
   return rutaCategoria(item.categoria);
 }
-/*
-Entrada: producto (objeto con nombre y categoria).
-Proceso: busca la ruta del producto en el mapa.
-Salida: ruta completa como string.
-*/
-/*
-Al igual que en rutaCategoria(), se obtiene la ruta base del proyecto y se define un mapa que 
-relaciona nombres de productos normalizados con rutas especificas. Si el producto no se encuentra 
-en el mapa, se llama a rutaCategoria() para obtener la ruta de su categoria como respaldo.
 
-- let mapa = { ... }: es un diccionario producto -> URL con rutas especificas de detalle.
-- if (mapa[key]) return base + mapa[key];: si el producto existe en el mapa, devuelve la ruta 
-especifica.
-- return rutaCategoria(item.categoria);: si el producto no esta en el mapa, devuelve la ruta de su 
-categoria como respaldo.
-*/
+
 
 //FUNCION PARA OBTENER LA IMAGEN DE UN PRODUCTO
 function imagenProducto(item) {
@@ -441,23 +270,9 @@ function imagenProducto(item) {
   return mapa[key] ? base + mapa[key] : "";
 }
 
-/*
-Entrada: producto (objeto con nombre).
-Proceso: busca la ruta de imagen en el mapa.
-Salida: ruta completa de la imagen (string).
-*/
 
-/*
-Esta funcion es similar a rutaProducto(), pero en lugar de devolver la URL de la pagina del producto, 
-devuelve la URL de su imagen. Si el producto no esta en el mapa, devuelve una cadena vacia.
-- let mapa = { ... }: es un diccionario producto -> URL de imagen con rutas especificas.
-- return mapa[key] ? base + mapa[key] : "": si el producto existe en el mapa, devuelve la ruta de su 
-imagen; si no, devuelve una cadena vacia.
 
-Implemente esta logica para preservar la coherencia visual del sitio y mantener una experiencia de 
-busqueda fluida donde cada resultado muestra su imagen correspondiente, respetando el estilo de cards  
-y la identidad estetica de la interfaz.
-*/
+
 
 
 // FUNCION PARA OBTENER EL GRID DE RESULTADOS
@@ -465,18 +280,9 @@ function obtenerGridResultados() {
   return document.querySelector(".products-grid-category, .product-grid");
 }
 
-/*
-Entrada: no recibe parametros.
-Proceso: busca el contenedor de resultados en el DOM.
-Salida: nodo del DOM o null.
-*/
 
-/*
-En esta funcion, utilizo querySelector para buscar en el DOM un elemento que tenga la clase 
-"products-grid-category" o "product-grid". Esto me permite obtener el contenedor donde se mostraran 
-los resultados de busqueda, sin importar si estoy en una pagina de categoria o en la pagina general 
-de productos. Si no se encuentra ningun elemento con esas clases, la funcion devuelve null.
- */
+
+
 
 let htmlOriginalGrid = null;
 
@@ -498,11 +304,7 @@ function renderResultadosEnCards(resultados, termino) {
     return;
   }
 
-  /*
-  Utilice innerHTML para renderizar los resultados de busqueda en forma de cards. Primero verifico 
-  si hay resultados, y luego mapeo la lista de productos y las categorias para crear el HTML que el 
-  contenedor del grid debe mostrar.
-  */
+  
 
   let html = resultados
     .slice(0, 12)
@@ -535,11 +337,7 @@ function renderResultadosEnCards(resultados, termino) {
   grid.innerHTML = html;
 }
 
-/*
-Entrada: resultados (array) y termino (string).
-Proceso: genera HTML y lo inserta en el grid.
-Salida: actualiza el DOM del grid.
-*/
+
 
 // FUNCION PARA COMBINAR LISTAS SIN DUPLICADOS 
 function combinarSinDuplicados(listas) {
@@ -553,11 +351,7 @@ function combinarSinDuplicados(listas) {
   return Object.values(mapa);
 }
 
-/*
-Entrada: array de listas con resultados.
-Proceso: usa un objeto para eliminar duplicados.
-Salida: array unico de resultados.
-*/
+
 
 // FUNCION PARA OBTENER LA IMAGEN DE LA CATEGORIA
 function imagenCategoria(categoria) {
@@ -571,11 +365,7 @@ function imagenCategoria(categoria) {
   return mapa[categoria] ? base + mapa[categoria] : "";
 }
 
-/*
-Entrada: categoria (string).
-Proceso: busca la imagen de la categoria.
-Salida: ruta de imagen o string vacio.
-*/
+
 
 // FUNCION PARA CREAR EL DRAWER DE BUSQUEDA 
 function crearDrawerBusqueda() {
@@ -612,11 +402,7 @@ function crearDrawerBusqueda() {
   };
 }
 
-/*
-Entrada: no recibe parametros.
-Proceso: crea el HTML del drawer y lo agrega al DOM.
-Salida: devuelve referencias a nodos clave del drawer.
-*/
+
 
 // FUNCION PARA RENDERIZAR RESULTADOS EN EL DRAWER 
 function renderResultadosEnDrawer(ui, resultados, termino) {
@@ -665,11 +451,7 @@ function renderResultadosEnDrawer(ui, resultados, termino) {
     .join("");
 }
 
-/*
-Entrada: ui (nodos del drawer), resultados (array), termino (string).
-Proceso: arma el HTML de resultados y lo inserta.
-Salida: actualiza el DOM del drawer.
-*/
+
 
 function resultadosBusqueda(termino) {
   return combinarSinDuplicados([
@@ -678,11 +460,7 @@ function resultadosBusqueda(termino) {
   ]);
 }
 
-/*
-Entrada: termino (string).
-Proceso: ejecuta ambas busquedas y combina resultados.
-Salida: array de resultados sin duplicados.
-*/
+
 
 function inicializarBuscadorDOM() {
   let input = document.querySelector(".search-input");
@@ -757,16 +535,9 @@ function inicializarBuscadorDOM() {
   });
 }
 
-/*
-Entrada: no recibe parametros.
-Proceso: inicializa el drawer de busqueda y registra eventos.
-Salida: buscador listo para usar.
-*/
+
 
 document.addEventListener("DOMContentLoaded", inicializarBuscadorDOM);
 
-/*
-Entrada: DOM cargado.
-Proceso: ejecuta inicializarBuscadorDOM.
-Salida: buscador activo.
-*/
+
+
