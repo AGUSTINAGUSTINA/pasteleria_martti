@@ -1,11 +1,12 @@
 {
-  "name": "mi-proyecto",
+  "name": "pasteleria-martti",
   "version": "1.0.0",
-  "description": "Este es un proyecto inicializado con NPM",
-  "main": "index.js",
+  "description": "Proyecto de pasteleria Martti",
+  "main": "main.js",
 "scripts": {
+  "starts": "node main.js",
   "sass": "sass ../sass/style.scss ../css/styles.css --watch"
 },
-  "author": "Zamora Agustina",
+  "author": "Zamora Agustina https://github.com/AGUSTINAGUSTINA/pasteleria_martti",
   "license": "ISC"
 }

@@ -38,6 +38,11 @@
     <!-- NAV BAR -->
     <header class="header">
         <nav class="navbar">
+            <button class="nav-toggle" type="button" aria-label="Abrir men�" aria-expanded="false">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
             <div class="nav-left">
                 <ul class="nav-links">
                     <li><a href="index.html">Inicio</a></li>
@@ -142,47 +147,21 @@
             </div>
         </section>
 
-    </main>
-
-
-    <!-- DESCRIPCIÓN DEL PROYECTO: SE ELIMINA PARA DAR LUGAR A LA SECCIONES 
-             CORRESPONDIENTES AL INDEX DEL PROYECTO
-        <section class="proyecto descripcion">
-            <div class="description">
-                <h2>Proyecto: Pastelería Martti</h2>
-                <p>
-                    Este proyecto se basa en el desarrollo web de la Pastelería Martti. En esta primera entrega,
-                    se simula la búsqueda de productos disponibles a través de la consola de JavaScript y ventanas
-                    emergentes como prompt, alert y confirm, permitiendo al usuario buscar productos por nombre o
-                    categoría y decidir si desea continuar la búsqueda o cancelarla.
-                </p>
-                <p>
-                    En futuras entregas, se incorporará la funcionalidad de carrito de compras, selección de
-                    cantidades y confirmación del pedido, con redirección a WhatsApp para finalizar la compra,
-                    ya que la pastelería no cuenta con stock fijo y este medio facilita la coordinación de los
-                    pedidos.
-                </p>
-
-                <h3>Conocimientos aplicados en esta entrega:</h3>
-                <ul class="conocimientos">
-                    <li>Estructura de archivos HTML y aplicación de CSS</li>
-                    <li>Vinculación de HTML a JavaScript</li>
-                    <li>Uso de objetos</li>
-                    <li>Arrays: declaración de arrays y aplicación de métodos</li>
-                    <li>Funciones para manejar la lógica de búsqueda</li>
-                    <li>Prompts para interactuar con el usuario y obtener consultas de búsqueda</li>
-                    <li>Alerts para mostrar resultados de búsqueda y mensajes de bienvenida y despedida</li>
-                    <li>Confirm para preguntar al usuario si desea continuar la búsqueda</li>
-                    <li>Operadores lógicos para controlar el flujo de búsqueda y decisiones</li>
-                    <li>Condicionales para mostrar mensajes según resultados</li>
-                    <li>Bucles para permitir múltiples búsquedas hasta finalizar</li>
-                </ul>
-
-
+        <!-- RESEÑAS -->
+        <section class="reviews" aria-labelledby="reviews-title">
+            <div class="reviews-inner">
+                <h2 id="reviews-title">Reseñas de nuestros clientes</h2>
+                <p class="reviews-status" role="status">Cargando resenas...</p>
+                <div class="reviews-grid"></div>
             </div>
         </section>
-  FIN DE LA DESCRIPCIÓN  -->
+    </main>
 
+ <!-- Botón de WhatsApp -->
+    <a href="https://wa.me/5493512729694" class="floating-whatsapp">
+      <img src="assets/iconos/icon_whatsapp.png" alt="Icono de WhatsApp para contactarse con la pastelería">
+    </a>
+   
     <!-- FOOTER -->
 
     <footer class="footer">
@@ -250,3 +229,6 @@
 </body>
 
 </html>
+
+
+

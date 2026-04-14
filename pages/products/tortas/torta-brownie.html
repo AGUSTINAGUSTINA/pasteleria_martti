@@ -1,18 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Torta Brownie | Martti</title>
-    <!-- TipografÃ­a Trirong p/titulos -->
+    <!-- Tipografía Trirong p/titulos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 
-    <!-- TipografÃ­a Manrope p/parrafo -->
+    <!-- Tipografía Manrope p/parrafo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -36,6 +36,11 @@
 
     <header class="header">
         <nav class="navbar">
+            <button class="nav-toggle" type="button" aria-label="Abrir men�" aria-expanded="false">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
             <div class="nav-left">
                 <ul class="nav-links">
                     <li><a href="../../../index.html">Inicio</a></li>
@@ -82,7 +87,7 @@
     <main>
 
 
-        <!-- TÃTULO TARTAS -->
+        <!-- TÍTULO TARTAS -->
         <section class="products-grid-title">
             <article class="product-card-title">
                 <img src="../../../assets/product/tortas.png" alt="Tortas">
@@ -90,7 +95,7 @@
             </article>
         </section>
 
-        <!-- GALERÃA CABSHA -->
+        <!-- GALERÍA CABSHA -->
 
         <div class="producto-detalle">
 
@@ -104,14 +109,15 @@
                 </div>
             </div>
 
-                            <div class="info-producto">
-                    <h2>Torta brownie</h2>
-                    <p>Bizcochuelo humedo de chocolate con nueces y ganache suave. Intensa y bien chocolatosa.</p>
-                    <h3>$43000</h3>
-                    <button type="button" data-action="add-to-cart" data-product="Torta brownie" data-price="43000" data-category="tortas">
-                        Agregar al carrito
-                    </button>
-                </div>
+            <div class="info-producto">
+                <h2>Torta brownie</h2>
+                <p>Bizcochuelo humedo de chocolate con nueces y ganache suave. Intensa y bien chocolatosa.</p>
+                <h3>$43000</h3>
+                <button type="button" data-action="add-to-cart" data-product="Torta brownie" data-price="43000"
+                    data-category="tortas">
+                    Agregar al carrito
+                </button>
+            </div>
 
         </div>
 
@@ -137,18 +143,18 @@
                 <h3>Contacto</h3>
                 <address>
                     <p>Mail:</p>
-                    <p>Teléfono:</p>
+                    <p>Tel�fono:</p>
                 </address>
             </div>
 
 
-            <!-- UBICACIÃ“N -->
+            <!-- UBICACIÓN -->
 
             <div class="footer-block">
-                <h3>Ubicación</h3>
+                <h3>Ubicaci�n</h3>
                 <div class="mapa-container">
                     <iframe
-                        src="https://www.google.com/maps?q=San+Antonio+3892,+Manantiales,+CÃ³rdoba,+Argentina&output=embed"
+                        src="https://www.google.com/maps?q=San+Antonio+3892,+Manantiales,+Córdoba,+Argentina&output=embed"
                         class="mapa-ubicacion" style="border:0;" allowfullscreen loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
@@ -161,13 +167,19 @@
             <div class="footer-block redes">
                 <h3>Seguinos en</h3>
                 <a href="https://www.instagram.com/martti.pasteleria/" target="_blank" rel="noopener">
-                    <img src="../../../assets/iconos/instagram.svg.png" alt="Instagram de PastelerÃ­a Martti"
-                        title="Instagram de PastelerÃ­a Martti" class="icono-redes">
+                    <img src="../../../assets/iconos/instagram.svg.png" alt="Instagram de Pastelería Martti"
+                        title="Instagram de Pastelería Martti" class="icono-redes">
                 </a>
             </div>
 
         </section>
     </footer>
+
+    <!-- Botón de WhatsApp -->
+    <a href="https://wa.me/5493512729694" class="floating-whatsapp">
+        <img src="../../../assets/iconos/icon_whatsapp.png" alt="Icono de WhatsApp para contactarse con la pastelería">
+    </a>
+
 
     <!------ JS ------>
 
@@ -178,6 +190,3 @@
 
 
 </body>
-
-
-

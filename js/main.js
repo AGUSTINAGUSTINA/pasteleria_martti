@@ -1,38 +1,16 @@
-// MAIN.JS
-
-
-
-
-
-
-
-
-//OBJETO 
+//---------------- Datos base del proyecto
 const pasteleriaMartti = {
   nombre: "Pasteleria Martti",
   productos: []
 };
 
- 
-
-//ARRAYS DE PRODUCTOS POR CATEGORIA
-
-
-
-// CLASE PRODUCTO
-
-
-// FUNCION CONSTRUCTORA
 class Producto {
   constructor(nombre, precio) {
     this.nombre = nombre;
     this.precio = precio;
   }
-
-
 }
 
-// Tartas
 const tartas = [
   new Producto("Tarta de peras con nueces y almendras", 35000),
   new Producto("Key lime pie", 44000),
@@ -43,7 +21,7 @@ const tartas = [
   new Producto("Tarta de coco", 35000),
   new Producto("Lemon pie", 35000)
 ];
-// Tortas
+
 const tortas = [
   new Producto("Torta mousse de chocolate", 48000),
   new Producto("Chocotorta", 44000),
@@ -55,17 +33,14 @@ const tortas = [
   new Producto("Torta brownie", 43000)
 ];
 
-// Postres
 const postres = [
   new Producto("Rogel", 38000),
   new Producto("Tiramisu", 34000),
   new Producto("Pavlova", 43000),
   new Producto("Blondie", 46000),
   new Producto("Marquise clasica", 46000)
-  
 ];
 
-// Otros
 const otrosProductos = [
   new Producto("Muffins frutos rojos", 4000),
   new Producto("Petit fours", 38000),
@@ -90,8 +65,6 @@ const otrosProductos = [
   new Producto("Box alfajores", 20000)
 ];
 
-// ASOCIACION DE ARRAYS AL OBJETO PASTELERIA MARTTI
-
 pasteleriaMartti.productos = {
   tartas,
   tortas,
@@ -99,25 +72,192 @@ pasteleriaMartti.productos = {
   otros: otrosProductos
 };
 
-
-// ASIGNACION A UNA PROPIEDAD DEL OBJETO PASTELERIAMARTTI GLOBAL PARA ACCESO DESDE OTROS ARCHIVOS
-
+//----------------Exportacion global
 window.pasteleriaMartti = pasteleriaMartti;
 
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
+//---------------- Interaccion UI
+function inicializarMain() {
   console.log("Main.js cargado correctamente");
-});
+  inicializarMenuResponsive();
+  cargarResenas();
+}
 
+function inicializarMenuResponsive() {
+  const navbars = document.querySelectorAll(".navbar");
+  navbars.forEach((navbar) => {
+    const toggle = navbar.querySelector(".nav-toggle");
+    const links = navbar.querySelector(".nav-links");
+    if (!toggle || !links) return;
 
+    toggle.addEventListener("click", () => {
+      const isOpen = navbar.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
 
+    links.addEventListener("click", (event) => {
+      if (event.target && event.target.tagName === "A") {
+        navbar.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+}
 
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
+//CONSULTA DE RESEÑAS SIMULADAS DESDE API EXTERNA
 
+function cargarResenas() {
+  const grid = document.querySelector(".reviews-grid");
+  if (!grid) return;
 
+  const status = document.querySelector(".reviews-status");
+  const cantidad = 6;
+  const productosPasteleria = [
+    "torta de chocolate",
+    "lemon pie",
+    "pavlova",
+    "tarta de peras",
+    "chocotorta",
+    "alfajores",
+    "cookies",
+    "mousse de chocolate",
+    "pan dulce",
+    "mini tartas",
+    "petit fours"
+  ];
+  const nombresEspanol = [
+    "Sofia Martinez",
+    "Lucia Gomez",
+    "Valentina Ruiz",
+    "Camila Herrera",
+    "Martina Lopez",
+    "Isabella Diaz",
+    "Mia Fernandez",
+    "Santiago Perez",
+    "Mateo Garcia",
+    "Thiago Romero",
+    "Juan Cruz Torres",
+    "Nicolas Alvarez"
+  ];
+  const detallesPasteleria = [
+    "textura suave y sabor equilibrado.",
+    "presentacion impecable y porciones generosas.",
+    "fresca, delicada y con el punto justo de dulzor.",
+    "se nota lo artesanal en cada bocado.",
+    "excelente combinacion de sabores y cremosidad.",
+    "llego perfecta y la calidad fue de primera."
+  ];
+  const plantillasResena = [
+    "Probe la {producto} y fue espectacular: {detalle}",
+    "La {producto} estaba increible; {detalle}",
+    "Se nota lo artesanal en la {producto}; {detalle}",
+    "Mi favorita fue la {producto}: {detalle}",
+    "Volveria a pedir la {producto}. {detalle}"
+  ];
+
+  function setStatus(mensaje) {
+    if (!status) return;
+    if (!mensaje) {
+      status.hidden = true;
+      return;
+    }
+    status.hidden = false;
+    status.textContent = mensaje;
+  }
+
+  setStatus("Cargando resenas...");
+
+  function elegirAleatorio(lista) {
+    return lista[Math.floor(Math.random() * lista.length)];
+  }
+
+  function armarResena(producto, detalle) {
+    const plantilla = elegirAleatorio(plantillasResena);
+    return plantilla
+      .replace("{producto}", producto)
+      .replace("{detalle}", detalle);
+  }
+
+  function obtenerDetalleDesdeComentario(comentario) {
+    const texto = String(comentario || "");
+    if (!texto) return elegirAleatorio(detallesPasteleria);
+    const indice = texto.length % detallesPasteleria.length;
+    return detallesPasteleria[indice];
+  }
+
+  function renderStars(rating) {
+    let stars = "";
+    for (let i = 1; i <= 5; i += 1) {
+      const clase = i <= rating ? "star filled" : "star empty";
+      stars += `<span class="star ${clase}" aria-hidden="true">★</span>`;
+    }
+    return (
+      `<div class="review-rating" aria-label="Calificacion: ${rating} de 5">` +
+        stars +
+        `<span class="sr-only">Calificacion: ${rating} de 5</span>` +
+      `</div>`
+    );
+  }
+
+  //USO DE FETCH PARA SIMULAR CONSULTA A API EXTERNA DE RESEÑAS Y USUARIOS
+  Promise.all([
+    fetch("https://dummyjson.com/comments?limit=" + cantidad).then((res) => res.json()),
+    fetch("https://randomuser.me/api/?results=" + cantidad + "&nat=es,ar").then((res) => res.json())
+  ])
+    .then(([comentariosData, usuariosData]) => {
+      const comentarios = Array.isArray(comentariosData?.comments) ? comentariosData.comments : [];
+      const usuarios = Array.isArray(usuariosData?.results) ? usuariosData.results : [];
+      const total = Math.min(comentarios.length, usuarios.length, cantidad);
+
+      if (!total) {
+        setStatus("No se pudieron cargar reseñas.");
+        return;
+      }
+
+      const html = comentarios.slice(0, total).map((comentario, index) => {
+        const usuario = usuarios[index] || {};
+        const nombre = nombresEspanol[index % nombresEspanol.length];
+        const ciudad = usuario.location?.city || "Argentina";
+        const avatar = usuario.picture?.medium || "";
+        const producto = elegirAleatorio(productosPasteleria);
+        const detalle = obtenerDetalleDesdeComentario(comentario.body);
+        const cuerpo = armarResena(producto, detalle);
+        const likes = Number(comentario.likes || 0);
+        const rating = Math.min(5, Math.max(3, Math.round(likes / 10) + 3));
+
+        return (
+          `<article class="review-card">` +
+            `<div class="review-header">` +
+              (avatar ? `<img class="review-avatar" src="${escapeHtml(avatar)}" alt="Foto de ${escapeHtml(nombre)}" loading="lazy">` : "") +
+              `<div class="review-user">` +
+                `<h3 class="review-name">${escapeHtml(nombre)}</h3>` +
+                `<p class="review-meta">Cliente de ${escapeHtml(ciudad)} - Recomienda ${escapeHtml(producto)}</p>` +
+              `</div>` +
+            `</div>` +
+            `<p class="review-body">${escapeHtml(cuerpo)}</p>` +
+            renderStars(rating) +
+          `</article>`
+        );
+      }).join("");
+
+      grid.innerHTML = html;
+      setStatus("");
+    })
+    .catch((error) => {
+      console.error("Error cargando resenas:", error);
+      setStatus("No se pudieron cargar resenas.");
+    });
+}
+
+document.addEventListener("DOMContentLoaded", inicializarMain);
+
+//---------------- Ajustes de catalogo
 postres.unshift(new Producto("Nube de nuez", 39000));
-
-
-

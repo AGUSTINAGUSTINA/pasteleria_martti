@@ -1,13 +1,6 @@
-// SEARCH.JS
-
 console.log("Buscador de Pasteleria Martti");
 
-
-
-
-//FUNCIONES DE NORMALIZACION DE TEXTO 
-
-
+//---------------- Utilidades de texto
 function normalizarTexto(texto) {
   return String(texto || "")
     .normalize("NFD")
@@ -16,29 +9,14 @@ function normalizarTexto(texto) {
     .trim();
 }
 
-
-
-
-
-
-//FUNCION PARA OBTENER LA RUTA BASE DEL PROYECTO
-
+//---------------- Base y catalogo
 function obtenerBaseProyecto() {
   let script = document.querySelector('script[src$="js/search.js"]');
   if (!script) return "";
   return script.getAttribute("src").replace(/js\/search\.js$/, "");
 }
 
-
-
-
-
-
-//FUNCION PARA OBTENER LAS CATEGORIAS
-
-
-
-function mostrarCategorias() {
+function obtenerCategoriasCatalogo() {
   if (typeof pasteleriaMartti === "undefined" || !pasteleriaMartti.productos) {
     return [];
   }
@@ -46,22 +24,13 @@ function mostrarCategorias() {
   return Object.keys(pasteleriaMartti.productos);
 }
 
-
-
-
-
-//FUNCION PARA OBTENER TODOS LOS PRODUCTOS DE TODAS LAS CATEGORIAS
-
-
-
 function obtenerTodosLosProductos() {
-  let categorias = mostrarCategorias();
+  let categorias = obtenerCategoriasCatalogo();
   let productos = [];
 
   categorias.forEach(function (categoria) {
     let lista = pasteleriaMartti.productos[categoria] || [];
 
-    
     lista.forEach(function (producto) {
       productos.push({
         nombre: producto.nombre,
@@ -74,15 +43,10 @@ function obtenerTodosLosProductos() {
   return productos;
 }
 
-
-
-
-// FUNCION DE BSUQUEDA POR CATEGORIA 
-
-
+//---------------- Busqueda
 function buscarPorCategoria(busqueda) {
   let termino = normalizarTexto(busqueda);
-  let categorias = mostrarCategorias();
+  let categorias = obtenerCategoriasCatalogo();
 
   return categorias
     .filter(function (categoria) {
@@ -96,13 +60,6 @@ function buscarPorCategoria(busqueda) {
       };
     });
 }
-
-
-
-
-
-// FUNCION DE BUSQUEDA POR NOMBRE
-
 
 function buscarPorNombre(busqueda) {
   let termino = normalizarTexto(busqueda);
@@ -122,12 +79,26 @@ function buscarPorNombre(busqueda) {
     });
 }
 
+function combinarSinDuplicados(listas) {
+  let mapa = {};
+  listas.forEach(function (lista) {
+    lista.forEach(function (item) {
+      let key = normalizarTexto(item.tipo + "::" + item.nombre + "::" + item.categoria);
+      mapa[key] = item;
+    });
+  });
+  return Object.values(mapa);
+}
 
-// FUNCIONES PARA OBTENER LAS RUTAS DE CATEGORIAS Y PRODUCTOS
+function obtenerResultadosBusqueda(termino) {
+  return combinarSinDuplicados([
+    buscarPorCategoria(termino),
+    buscarPorNombre(termino)
+  ]);
+}
 
-
-
-function rutaCategoria(categoria) {
+//---------------- Rutas e imagenes
+function obtenerRutaCategoria(categoria) {
   let base = obtenerBaseProyecto();
   let mapa = {
     tartas: "pages/productos.html",
@@ -139,17 +110,10 @@ function rutaCategoria(categoria) {
   return base + (mapa[categoria] || "pages/productos.html");
 }
 
-
-
-
-
-
-//FUNCION PARA OBTENER LA RUTA DE UN PRODUCTO
-function rutaProducto(item) {
+function obtenerRutaProducto(item) {
   let base = obtenerBaseProyecto();
   let key = normalizarTexto(item.nombre);
   let mapa = {
-    // Tartas
     "tarta de peras con nueces y almendras": "pages/products/tartas/tarta-peras.html",
     "key lime pie": "pages/products/tartas/key-lime-pie.html",
     "tarta de frutal": "pages/products/tartas/pavlova.html",
@@ -159,7 +123,6 @@ function rutaProducto(item) {
     "tarta de coco": "pages/products/tartas/tarta-coco.html",
     "lemon pie": "pages/products/tartas/lemon-pie.html",
 
-    // Tortas
     "torta mousse de chocolate": "pages/products/tortas/torta-mousse-de-chocolate.html",
     "chocotorta": "pages/products/tortas/torta-chocotorta.html",
     "cheesecake frutos rojos": "pages/products/tortas/torta-cheesecake-frutos-rojos.html",
@@ -169,7 +132,6 @@ function rutaProducto(item) {
     "carrot cake": "pages/products/tortas/torta-carrot-cake.html",
     "torta brownie": "pages/products/tortas/torta-brownie.html",
 
-    // Postres
     "rogel": "pages/products/postres/rogel.html",
     "tiramisu": "pages/products/postres/tiramisu.html",
     "pavlova": "pages/products/postres/pavlova.html",
@@ -177,7 +139,6 @@ function rutaProducto(item) {
     "marquise clasica": "pages/products/postres/marquise.html",
     "nube de nuez": "pages/products/postres/nube-de-nuez.html",
 
-    // Otros
     "muffins frutos rojos": "pages/products/categorias/muffins.html",
     "petit fours": "pages/products/mini-delicias/petit-fours.html",
     "huevos de pascua": "pages/products/categorias/huevos-pascua.html",
@@ -204,17 +165,14 @@ function rutaProducto(item) {
   };
 
   if (mapa[key]) return base + mapa[key];
-  return rutaCategoria(item.categoria);
+  return obtenerRutaCategoria(item.categoria);
 }
 
-
-
-//FUNCION PARA OBTENER LA IMAGEN DE UN PRODUCTO
-function imagenProducto(item) {
+// Funcion para obtener la imagen de un producto
+function obtenerImagenProducto(item) {
   let base = obtenerBaseProyecto();
   let key = normalizarTexto(item.nombre);
   let mapa = {
-    // Tartas
     "tarta de peras con nueces y almendras": "assets/product/tartas/tarta-peras/tarta-pera.png",
     "key lime pie": "assets/product/tartas/key-lime-pie/key-lime-pie.jpg",
     "tarta de frutal": "assets/product/tartas/tarta-frutal/tarta-frutal.jpg",
@@ -224,7 +182,6 @@ function imagenProducto(item) {
     "tarta de coco": "assets/product/tartas/tarta-coco/coco-dulce-de-leche.png",
     "lemon pie": "assets/product/tartas/lemon-pie/lemon-pie.png",
 
-    // Tortas
     "torta mousse de chocolate": "assets/product/tortas/Torta-mousse-de-chocolate/torta-mousse.png",
     "chocotorta": "assets/product/tortas/chocotorta/chocotorta.jpg",
     "cheesecake frutos rojos": "assets/product/tortas/Cheesecake-fr/cheesecake.png",
@@ -234,7 +191,6 @@ function imagenProducto(item) {
     "carrot cake": "assets/product/tortas/carrot-cake/carrot-cake.jpg",
     "torta brownie": "assets/product/tortas/torta-brownie/torta-brownie.jpg",
 
-    // Postres
     "rogel": "assets/product/postres/rogel/rogel.jpg",
     "tiramisu": "assets/product/postres/tiramisu/tiramisu.jpg",
     "pavlova": "assets/product/postres/pavlova.png",
@@ -242,7 +198,6 @@ function imagenProducto(item) {
     "marquise clasica": "assets/product/postres/marquise.png",
     "nube de nuez": "assets/product/postres/nube-nuez/nube-de-nuez.png",
 
-    // Otros
     "muffins frutos rojos": "assets/product/muffins.png",
     "petit fours": "assets/product/mini-delicias/petit-fours.jpg",
     "huevos de pascua": "assets/product/huevos-pascua.png",
@@ -270,26 +225,27 @@ function imagenProducto(item) {
   return mapa[key] ? base + mapa[key] : "";
 }
 
+// Funcion para obtener la imagen de la categoria
+function obtenerImagenCategoria(categoria) {
+  let base = obtenerBaseProyecto();
+  let mapa = {
+    tartas: "assets/product/tartas.png",
+    tortas: "assets/product/tartas.png",
+    postres: "assets/product/tartas.png",
+    otros: "assets/product/mini-delicias.png"
+  };
+  return mapa[categoria] ? base + mapa[categoria] : "";
+}
 
-
-
-
-
-// FUNCION PARA OBTENER EL GRID DE RESULTADOS
-function obtenerGridResultados() {
+//---------------- Render en pagina
+function obtenerContenedorResultados() {
   return document.querySelector(".products-grid-category, .product-grid");
 }
 
-
-
-
-
 let htmlOriginalGrid = null;
 
-
-// FUNCION PARA RENDERIZAR LOS RESULTADOS EN CARDS 
-function renderResultadosEnCards(resultados, termino) {
-  let grid = obtenerGridResultados();
+function renderizarResultadosEnCards(resultados, termino) {
+  let grid = obtenerContenedorResultados();
   if (!grid) return;
 
   if (!termino) {
@@ -304,14 +260,12 @@ function renderResultadosEnCards(resultados, termino) {
     return;
   }
 
-  
-
   let html = resultados
     .slice(0, 12)
     .map(function (item) {
       if (item.tipo === "categoria") {
         return (
-          '<a href="' + rutaCategoria(item.categoria) + '" class="product-link">' +
+          '<a href="' + obtenerRutaCategoria(item.categoria) + '" class="product-link">' +
             '<article class="product-card-category" data-name="' + item.categoria + '">' +
               "<h3>" + item.nombre + "</h3>" +
             "</article>" +
@@ -319,11 +273,11 @@ function renderResultadosEnCards(resultados, termino) {
         );
       }
 
-      let imagen = imagenProducto(item);
+      let imagen = obtenerImagenProducto(item);
       let imgHtml = imagen ? '<img src="' + imagen + '" alt="' + item.nombre + '">' : "";
 
       return (
-        '<a href="' + rutaProducto(item) + '" class="product-link">' +
+        '<a href="' + obtenerRutaProducto(item) + '" class="product-link">' +
           '<article class="product-card" data-name="' + item.nombre + '">' +
             '<div class="product-label">' + item.nombre + "</div>" +
             imgHtml +
@@ -337,37 +291,7 @@ function renderResultadosEnCards(resultados, termino) {
   grid.innerHTML = html;
 }
 
-
-
-// FUNCION PARA COMBINAR LISTAS SIN DUPLICADOS 
-function combinarSinDuplicados(listas) {
-  let mapa = {};
-  listas.forEach(function (lista) {
-    lista.forEach(function (item) {
-      let key = normalizarTexto(item.tipo + "::" + item.nombre + "::" + item.categoria);
-      mapa[key] = item;
-    });
-  });
-  return Object.values(mapa);
-}
-
-
-
-// FUNCION PARA OBTENER LA IMAGEN DE LA CATEGORIA
-function imagenCategoria(categoria) {
-  let base = obtenerBaseProyecto();
-  let mapa = {
-    tartas: "assets/product/tartas.png",
-    tortas: "assets/product/tartas.png",
-    postres: "assets/product/tartas.png",
-    otros: "assets/product/mini-delicias.png"
-  };
-  return mapa[categoria] ? base + mapa[categoria] : "";
-}
-
-
-
-// FUNCION PARA CREAR EL DRAWER DE BUSQUEDA 
+//---------------- Drawer de busqueda
 function crearDrawerBusqueda() {
   let overlay = document.createElement("div");
   overlay.className = "search-drawer-overlay";
@@ -402,10 +326,7 @@ function crearDrawerBusqueda() {
   };
 }
 
-
-
-// FUNCION PARA RENDERIZAR RESULTADOS EN EL DRAWER 
-function renderResultadosEnDrawer(ui, resultados, termino) {
+function renderizarResultadosEnDrawer(ui, resultados, termino) {
   if (!ui) return;
 
   if (!termino) {
@@ -425,9 +346,9 @@ function renderResultadosEnDrawer(ui, resultados, termino) {
     .slice(0, 20)
     .map(function (item) {
       if (item.tipo === "categoria") {
-        let img = imagenCategoria(item.categoria);
+        let img = obtenerImagenCategoria(item.categoria);
         return (
-          '<a class="search-drawer-item" href="' + rutaCategoria(item.categoria) + '">' +
+          '<a class="search-drawer-item" href="' + obtenerRutaCategoria(item.categoria) + '">' +
             '<div class="search-drawer-thumb">' + (img ? '<img src="' + img + '" alt="' + item.nombre + '">' : "") + "</div>" +
             '<div class="search-drawer-meta">' +
               '<h4>' + item.nombre + "</h4>" +
@@ -437,9 +358,9 @@ function renderResultadosEnDrawer(ui, resultados, termino) {
         );
       }
 
-      let imgProducto = imagenProducto(item);
+      let imgProducto = obtenerImagenProducto(item);
       return (
-        '<a class="search-drawer-item" href="' + rutaProducto(item) + '">' +
+        '<a class="search-drawer-item" href="' + obtenerRutaProducto(item) + '">' +
           '<div class="search-drawer-thumb">' + (imgProducto ? '<img src="' + imgProducto + '" alt="' + item.nombre + '">' : "") + "</div>" +
           '<div class="search-drawer-meta">' +
             "<h4>" + item.nombre + "</h4>" +
@@ -451,17 +372,7 @@ function renderResultadosEnDrawer(ui, resultados, termino) {
     .join("");
 }
 
-
-
-function resultadosBusqueda(termino) {
-  return combinarSinDuplicados([
-    buscarPorCategoria(termino),
-    buscarPorNombre(termino)
-  ]);
-}
-
-
-
+//---------------- Inicializacion
 function inicializarBuscadorDOM() {
   let input = document.querySelector(".search-input");
   let searchPill = document.querySelector(".search-pill");
@@ -489,8 +400,8 @@ function inicializarBuscadorDOM() {
 
   function ejecutarBusqueda(valor) {
     let termino = normalizarTexto(valor);
-    let resultados = resultadosBusqueda(termino);
-    renderResultadosEnDrawer(ui, resultados, termino);
+    let resultados = obtenerResultadosBusqueda(termino);
+    renderizarResultadosEnDrawer(ui, resultados, termino);
   }
 
   input.addEventListener("focus", function () {
@@ -535,9 +446,4 @@ function inicializarBuscadorDOM() {
   });
 }
 
-
-
 document.addEventListener("DOMContentLoaded", inicializarBuscadorDOM);
-
-
-

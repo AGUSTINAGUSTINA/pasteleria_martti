@@ -1,9 +1,5 @@
-// FUNCION DE CONTACTO: ENVIAR FORMULARIO
-
-
-// FUNCION PARA MOSTRAR UN DIALOGO EN CONTACTO
-
-function mostrarDialogoContacto(mensaje) {
+//---------------- UI y alertas
+function mostrarAlertaContacto(mensaje) {
   if (!window.HTMLDialogElement || !HTMLDialogElement.prototype.showModal) {
     alert(mensaje);
     return;
@@ -31,44 +27,36 @@ function mostrarDialogoContacto(mensaje) {
   dialog.showModal();
 }
 
-
-// FUNCION PARA ENVIAR EL FORMULARIO POR WHATSAPP
-
-function enviarWhatsApp() {
-  const nombre = document.getElementById('nombre').value;
-  const email = document.getElementById('email').value;
-  const telefono = document.getElementById('telefono').value;
-  const asunto = document.getElementById('asunto').value;
-  const mensaje = document.getElementById('mensaje').value;
-
+//---------------- Envio
+function enviarContactoPorWhatsapp() {
+  const nombre = document.getElementById("nombre").value;
+  const email = document.getElementById("email").value;
+  const telefono = document.getElementById("telefono").value;
+  const asunto = document.getElementById("asunto").value;
+  const mensaje = document.getElementById("mensaje").value;
 
   if (!nombre || !email || !asunto || !mensaje) {
-    mostrarDialogoContacto('Por favor completa los campos requeridos');
+    mostrarAlertaContacto("Por favor completa los campos requeridos");
     return;
   }
 
-  const contenido = `*Nuevo mensaje de contacto*%0A%0A*Nombre:* ${encodeURIComponent(nombre)}%0A*Email:* ${encodeURIComponent(email)}%0A*Telefono:* ${encodeURIComponent(telefono || 'No proporcionado')}%0A*Asunto:* ${encodeURIComponent(asunto)}%0A%0A*Mensaje:*%0A${encodeURIComponent(mensaje)}`;
+  const contenido = `*Nuevo mensaje de contacto*%0A%0A*Nombre:* ${encodeURIComponent(nombre)}%0A*Email:* ${encodeURIComponent(email)}%0A*Telefono:* ${encodeURIComponent(telefono || "No proporcionado")}%0A*Asunto:* ${encodeURIComponent(asunto)}%0A%0A*Mensaje:*%0A${encodeURIComponent(mensaje)}`;
 
-  window.open(`https://wa.me/+5493512729694?text=${contenido}`, '_blank');
+  window.open(`https://wa.me/+5493512729694?text=${contenido}`, "_blank");
 }
 
-// FUNCION PARA MANEJAR EL CLICK EN EL BOTON DE WHATSAPP
-const botonWhatsApp = document.querySelector(".btn-whatsapp");
-if (botonWhatsApp) {
-  botonWhatsApp.addEventListener("click", function (e) {
+//---------------- Eventos
+const botonWhatsapp = document.querySelector(".btn-whatsapp");
+if (botonWhatsapp) {
+  botonWhatsapp.addEventListener("click", function (e) {
     e.preventDefault();
-    enviarWhatsApp();
+    enviarContactoPorWhatsapp();
   });
 }
 
-
-// Limpiar el formulario despues de enviar
-const form = document.getElementById('contactForm');
+const form = document.getElementById("contactForm");
 if (form) {
-  form.addEventListener('submit', function(e) {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
   });
 }
-
-
-

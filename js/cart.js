@@ -1,17 +1,13 @@
-// CART.JS
 console.log("Carrito de Pasteleria Martti (DOM)");
 
-//VARIABLES GLOBALES:
-
+//---------------- Estado y configuracion
 const claveStorageCarrito = "pasteleria_martti_carrito";
 let carrito = [];
 let uiCarrito = null;
 let uiFinalizarCompra = null;
 const numWhatsapp = "5493512729694";
 
-
-//FUNCION PARA CARGAR EL CARRITO DESDE LOCALSTORAGE
-
+//---------------- Persistencia
 function cargarCarrito() {
   let guardado = localStorage.getItem(claveStorageCarrito);
 
@@ -22,20 +18,11 @@ function cargarCarrito() {
   }
 }
 
-
-
-//USO DE JSON: json.stringifyy json.parse
-//FUNCION PARA GUARDAR EL CARRITO EN LOCALSTORAGE
-
 function guardarCarrito() {
   localStorage.setItem(claveStorageCarrito, JSON.stringify(carrito));
 }
 
-
-
-
-//FUNCION PARA ACTUALIZAR EL CONTADOR DEL CARRITO EN EL DOM
-
+//---------------- Estado UI
 function actualizarContadorCarrito() {
   let totalItems = carrito.length;
   let contadores = document.querySelectorAll(".cart-count");
@@ -45,25 +32,108 @@ function actualizarContadorCarrito() {
   });
 }
 
-
-
-//FUNCION PARA ACTUALIZAR LA VISTA DEL CARRITO
-
 function actualizarVistaCarrito() {
   actualizarContadorCarrito();
 }
 
+//---------------- Notificacion de producto agregado al carrito
+//USO DE TOASTIFY
+let toastifyCarga = null;
+//USO DE PROMISE
+//FUNCION DE CARGA
+function cargarToastify() {
+  if (window.Toastify) return Promise.resolve();
+  if (toastifyCarga) return toastifyCarga;
 
+  toastifyCarga = new Promise(function (resolve, reject) {
+    if (!document.querySelector('link[data-toastify="true"]')) {
+      let link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css";
+      link.dataset.toastify = "true";
+      document.head.appendChild(link);
+    }
 
-//FUNCION PARA FORMATEAR NUMEROS A MONEDA LOCAL (ARGENTINA)
+    let script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js";
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
 
+  return toastifyCarga;
+}
+
+function mostrarToastProductoAgregado(nombreProducto) {
+  let nombre = String(nombreProducto || "").trim();
+  let textoNombre = nombre || "El producto";
+
+  cargarToastify()
+    .then(function () {
+      if (!window.Toastify) return;
+      let contenido = document.createElement("div");
+      contenido.style.display = "flex";
+      contenido.style.alignItems = "center";
+      contenido.style.gap = "12px";
+
+      let icono = document.createElement("div");
+      icono.style.width = "28px";
+      icono.style.height = "28px";
+      icono.style.borderRadius = "50%";
+      icono.style.display = "flex";
+      icono.style.alignItems = "center";
+      icono.style.justifyContent = "center";
+      icono.style.background = "#00A272";
+      icono.style.boxShadow = "0 6px 14px rgba(0, 162, 114, 0.35)";
+      icono.innerHTML =
+        '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+          '<path d="M1.5 6.5L5.5 10.5L14.5 1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />' +
+        "</svg>";
+
+      let texto = document.createElement("div");
+      texto.style.fontFamily = "\"Manrope\", sans-serif";
+      texto.style.fontSize = "1rem";
+      texto.style.lineHeight = "1.35";
+      texto.style.color = "#000000";
+
+      let nombreSpan = document.createElement("span");
+      nombreSpan.textContent = textoNombre;
+      nombreSpan.style.fontWeight = "700";
+
+      let restoSpan = document.createElement("span");
+      restoSpan.textContent = " se agregó al carrito.";
+
+      texto.appendChild(nombreSpan);
+      texto.appendChild(restoSpan);
+      contenido.appendChild(icono);
+      contenido.appendChild(texto);
+
+      Toastify({
+        node: contenido,
+        duration: 3200,
+        gravity: "top",
+        position: "right",
+        offset: { x: 24, y: 24 },
+        stopOnFocus: true,
+        style: {
+          background: "#C8F2E6",
+          border: "1px solid #00A272",
+          borderRadius: "14px",
+          boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
+          padding: "14px 16px",
+          minWidth: "260px",
+          maxWidth: "420px"
+        }
+      }).showToast();
+    })
+    .catch(function () {});
+}
+
+//---------------- Formato y catalogo
 function formatearMoneda(numero) {
   return new Intl.NumberFormat("es-AR").format(Number(numero) || 0);
 }
-
-
-
-//FUNCION PARA OBTENER UNA CLAVE LIMPIA DE UN NOMBRE DE PRODUCTO
 
 function claveProducto(texto) {
   return String(texto || "")
@@ -73,11 +143,7 @@ function claveProducto(texto) {
     .trim();
 }
 
-
-
-//FUNCION PARA CREAR UN INDICE DE PRODUCTOS DESDE EL CATALOGO (pasteleriaMartti.productos)
-
-function crearIndiceCatalogo() {
+function crearIndiceCatalogoProductos() {
   let indice = {};
   if (typeof pasteleriaMartti === "undefined" || !pasteleriaMartti.productos) return indice;
 
@@ -97,12 +163,8 @@ function crearIndiceCatalogo() {
   return indice;
 }
 
-
-
-//FUNCION PARA SINCRONIZAR LOS PRECIOS DESDE EL CATALOGO A LOS BOTONES DEL DOM
-
-function sincronizarPreciosDesdeCatalogo() {
-  let indice = crearIndiceCatalogo();
+function sincronizarPreciosCatalogo() {
+  let indice = crearIndiceCatalogoProductos();
   if (!Object.keys(indice).length) return;
 
   let contenedores = document.querySelectorAll(".info-producto");
@@ -131,15 +193,7 @@ function sincronizarPreciosDesdeCatalogo() {
   });
 }
 
-
-
-
-//PARTE UI DEL CARRITO
-
-
-
-//FUNCION PARA CREAR EL DRAWER DEL CARRITO EN EL DOM
-
+//---------------- UI: creacion
 function crearDrawerCarrito() {
   let overlay = document.createElement("div");
   overlay.className = "cart-drawer-overlay";
@@ -169,10 +223,6 @@ function crearDrawerCarrito() {
     total: drawer.querySelector(".cart-total")
   };
 }
-
-
-
-//FUNCION PARA CREAR EL MODAL DE FINALIZAR COMPRA
 
 function crearModalFinalizarCompra() {
   let overlay = document.createElement("div");
@@ -210,21 +260,14 @@ function crearModalFinalizarCompra() {
   };
 }
 
-
-
-//FUNCION PARA CALCULAR EL TOTAL DEL CARRITO SUMANDO LOS PRECIOS DE LOS PRODUCTOS
-
+//---------------- UI: render
 function calcularTotalCarrito() {
   return carrito.reduce(function (acc, item) {
     return acc + (Number(item.precio) || 0);
   }, 0);
 }
 
-
-
-//FUNCION PARA RENDERIZAR EL CONTENIDO DEL DRAWER Y EL MODAL
-
-function renderDrawerCarrito() {
+function renderizarDrawerCarrito() {
   if (!uiCarrito) return;
 
   if (!carrito.length) {
@@ -260,11 +303,7 @@ function renderDrawerCarrito() {
   uiCarrito.total.textContent = "$" + formatearMoneda(subtotal);
 }
 
-
-
-//FUNCION PARA RENDERIZAR EL CONTENIDO DEL MODAL
-
-function renderModalFinalizarCompra() {
+function renderizarModalFinalizarCompra() {
   if (!uiFinalizarCompra) return;
 
   if (!carrito.length) {
@@ -298,21 +337,13 @@ function renderModalFinalizarCompra() {
   uiFinalizarCompra.total.textContent = "$" + formatearMoneda(total);
 }
 
-
-
-
-//FUNCION PARA OBTENER EL TEXTO DE UNA OPCION
-
+//---------------- UI: opciones
 function obtenerTextoOpcion(input) {
   let label = input.closest("label");
   if (label) return label.textContent.replace(/\s+/g, " ").trim();
   if (input.value) return String(input.value).trim();
   return input.name || "Opcion";
 }
-
-
-
-//FUNCION PARA OBTENER LAS OPCIONES SELECCIONADAS
 
 function obtenerOpcionesSeleccionadas(button) {
   let info = button.closest(".info-producto");
@@ -340,12 +371,7 @@ function obtenerOpcionesSeleccionadas(button) {
   return seleccionadas;
 }
 
-
-
-//FUNCION PARA OBTENER LOS DATOS DE UN PRODUCTO
-
-
-function obtenerDatosDesdeBoton(button) {
+function obtenerDatosProductoDesdeBoton(button) {
   let nombre = button.dataset.product || "";
   let precio = Number(button.dataset.price) || 0;
   let categoria = button.dataset.category || "otros";
@@ -368,8 +394,6 @@ function obtenerDatosDesdeBoton(button) {
     if (nodoCategoria && nodoCategoria.dataset.name) categoria = nodoCategoria.dataset.name;
   }
 
-  
-
   return {
     nombre: nombre || "Producto",
     precio: precio || 0,
@@ -378,12 +402,7 @@ function obtenerDatosDesdeBoton(button) {
   };
 }
 
-
-
-
-
-//FUNCION PARA AGREGAR UN PRODUCTO AL CARRITO
-
+//---------------- Acciones
 function agregarAlCarrito(producto, categoria, opciones) {
   let item = {
     nombre: "",
@@ -406,22 +425,24 @@ function agregarAlCarrito(producto, categoria, opciones) {
   carrito.push(item);
   guardarCarrito();
   actualizarVistaCarrito();
+  mostrarToastProductoAgregado(item.nombre);
 }
 
+function eliminarDelCarrito(index) {
+  if (index < 0 || index >= carrito.length) return;
+  carrito.splice(index, 1);
+  guardarCarrito();
+  actualizarVistaCarrito();
+  renderizarDrawerCarrito();
+}
 
-
-//FUNCION PARA AGREGAR UN PRODUCTO AL CARRITO
-
+//---------------- UI: apertura y cierre
 function abrirDrawerCarrito() {
   if (!uiCarrito) return;
-  renderDrawerCarrito();
+  renderizarDrawerCarrito();
   uiCarrito.overlay.classList.add("is-open");
   document.body.classList.add("cart-drawer-open");
 }
-
-
-
-//FUNCION PARA CERRAR EL PANEL LATERAL DEL CARRITO
 
 function cerrarDrawerCarrito() {
   if (!uiCarrito) return;
@@ -429,28 +450,16 @@ function cerrarDrawerCarrito() {
   document.body.classList.remove("cart-drawer-open");
 }
 
-
-
-//FUNCION PARA MOSTRAR EL PANEL LATERAL DEL CARRITO
-
 function mostrarCarrito() {
   abrirDrawerCarrito();
 }
 
-
-
-//FUNCION PARA ABRIR EL MODAL DE FINALIZAR COMPRA
-
 function abrirModalFinalizarCompra() {
   if (!uiFinalizarCompra) return;
-  renderModalFinalizarCompra();
+  renderizarModalFinalizarCompra();
   uiFinalizarCompra.overlay.classList.add("is-open");
   document.body.classList.add("checkout-modal-open");
 }
-
-
-
-//FUNCION PARA CERRAR EL MODAL DE FINALIZAR COMPRA
 
 function cerrarModalFinalizarCompra() {
   if (!uiFinalizarCompra) return;
@@ -458,23 +467,8 @@ function cerrarModalFinalizarCompra() {
   document.body.classList.remove("checkout-modal-open");
 }
 
-
-
-//FUNCION PARA ELIMINAR UN PRODUCTO DEL CARRITO
-
-function eliminarDelCarrito(index) {
-  if (index < 0 || index >= carrito.length) return;
-  carrito.splice(index, 1);
-  guardarCarrito();
-  actualizarVistaCarrito();
-  renderDrawerCarrito();
-}
-
-
-//FUNCION PARA CREAR EL MENSAJE DE WHATSAPP DE LA FINALIZACION DE LA COMPRA
-
-
-function crearMensajeFinalizarCompraWhatsApp() {
+//---------------- Finalizacion
+function crearMensajeFinalizacionWhatsapp() {
   let msjWhatsapp = [
     "Hola! quisiera continuar con el pago del siguiente pedido:",
     ""
@@ -495,25 +489,18 @@ function crearMensajeFinalizarCompraWhatsApp() {
   return msjWhatsapp.join("\n");
 }
 
-
-//FUNCION PARA COMPRAR POR WHATSAPP
-
-
 function comprarPorWhatsApp() {
   if (!carrito.length) return;
-  let mensaje = crearMensajeFinalizarCompraWhatsApp();
+  let mensaje = crearMensajeFinalizacionWhatsapp();
   let url = "https://wa.me/" + numWhatsapp + "?text=" + encodeURIComponent(mensaje);
   window.open(url, "_blank");
 }
 
-
-
-//FUNCION PARA INICIALIZAR EL CARRITO
-
+//---------------- Inicializacion
 function inicializarCarritoDOM() {
   cargarCarrito();
   actualizarVistaCarrito();
-  sincronizarPreciosDesdeCatalogo();
+  sincronizarPreciosCatalogo();
   uiCarrito = crearDrawerCarrito();
   uiFinalizarCompra = crearModalFinalizarCompra();
 
@@ -530,7 +517,7 @@ function inicializarCarritoDOM() {
       e.preventDefault();
       e.stopPropagation();
 
-      let data = obtenerDatosDesdeBoton(button);
+      let data = obtenerDatosProductoDesdeBoton(button);
       agregarAlCarrito(
         {
           nombre: data.nombre,
@@ -598,17 +585,8 @@ function inicializarCarritoDOM() {
   });
 }
 
-
-
-//FUNCIONES EXPORTADAS
 window.agregarAlCarrito = agregarAlCarrito;
 window.mostrarCarrito = mostrarCarrito;
 window.carrito = carrito;
 
-
-//EJECUCION DE INICIALIZACION
 document.addEventListener("DOMContentLoaded", inicializarCarritoDOM);
-
-
-
-

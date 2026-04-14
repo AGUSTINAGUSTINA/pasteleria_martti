@@ -43,6 +43,7 @@ p, li, a { font-family: $p; font-size: $size-p; }
   .gallery { grid-template-columns: repeat(3, 1fr); }
   .header-nav { display: flex; justify-content: space-between; align-items: center; }
   .product-card { padding: 0.8rem; }
+  .reviews-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 // Ajustes para Mobile
@@ -53,7 +54,7 @@ p, li, a { font-family: $p; font-size: $size-p; }
   h3 { font-size: 18px; }
   p { font-size: 16px; }
 
-  // Productos: evitar overflow y columnas fijas
+  // Productos
   .product-grid { grid-template-columns: 1fr; gap: 1rem; }
   .product-card { width: 100% !important; max-width: 420px; height: auto !important; padding: 0.6rem; margin: 0 auto; }
   .product-card img { height: auto; object-fit: cover; }
@@ -65,6 +66,9 @@ p, li, a { font-family: $p; font-size: $size-p; }
   .gallery { grid-template-columns: repeat(2, 1fr); }
   .products-grid-featured { gap: 1rem; }
   .product-card-featured { width: 100%; max-width: 360px; margin: 0 auto; }
+  .reviews { padding: 3rem 1.25rem; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .review-card { padding: 1.25rem; }
 
   // Hero / logo content
   .logo-content { padding: 1.2rem 1.5rem; border-width: 2px; }
@@ -80,16 +84,47 @@ p, li, a { font-family: $p; font-size: $size-p; }
   // Cabeceras y navegación
   .header-nav { flex-direction: column; gap: 0.5rem; align-items: stretch; }
   nav .menu { display: block; }
+  .navbar { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; row-gap: 12px; }
+  .nav-toggle { display: inline-flex; order: 1; }
+  .nav-actions { order: 2; margin-left: auto; }
+  .navbar > .cart-button { order: 2; }
+  .nav-left { order: 3; width: 100%; }
+  .nav-links { display: none; flex-direction: column; gap: 0.75rem; align-items: center; }
+  .navbar.is-open .nav-links { display: flex; }
+  .nav-actions .search-pill { max-width: 220px; }
+  .nav-actions .search-input { width: 120px; }
 
   // Footer y utilidades
   .footer { text-align: center; }
+  .footer .footer-content { flex-direction: column; align-items: center; }
+  .footer .footer-content > div { width: 100%; max-width: 480px; align-items: center; }
+  .footer .footer-content h3,
+  .footer .footer-content p { text-align: center; }
   .desktop-only { display: none !important; }
   .mobile-only { display: block !important; }
 
-  // Evitar márgenes derechos inesperados (por si hay containers fijos)
   body, html { overflow-x: hidden; }
 }
 
-// Ejemplo de tipografía fluida para párrafos
+
 :root { --fluid-scale: clamp(14px, 1.8vw, 18px); }
 p { font-size: var(--fluid-scale); }
+
+
+//whatsapp button
+
+  @include tablet {
+    .floating-whatsapp img {
+      width: 45px;
+      height: 45px;
+    }
+  }
+
+  @include mobile {
+    .floating-whatsapp img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+

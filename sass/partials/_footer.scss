@@ -7,52 +7,73 @@ footer {
   text-align: left;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 24px 20px;
   width: 100%;
   position: relative;
 
   // SECCIÓN
-  section {
+  .footer-content {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: nowrap;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 24px;
 
     // DIVISIONES DENTRO DE LA SECCIÓN
-    div {
-      flex: 1 50%;
-      margin: 10px;
+    > div {
+      flex: 1 1 260px;
+      min-width: 240px;
+      margin: 0;
+      display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
  
-        img {
-          max-width: 259px;
-          height: 80%;
-          width: 80%;
-          align-items: center;
-        }
+      img:not(.icono-redes) {
+        max-width: 220px;
+        width: 100%;
+        height: auto;
       }
+    }
+
+    > div.redes {
+      align-items: center;
+      text-align: center;
+
       h3 {
-        text-align: left;
-        font-family: $h;
-        font-weight: normal;
-        font-size: 24px;
-        color: $chocolate;
+        text-align: center;
       }
-    
+    }
+    h3 {
+      text-align: left;
+      font-family: $h;
+      font-weight: normal;
+      font-size: 24px;
+      color: $chocolate;
+    }
   
-  p {
-    text-align: left;
-    margin-top: 8px;
-    font-size: 18px;
-    color: $chocolate;
+    p {
+      text-align: left;
+      margin-top: 8px;
+      font-size: 18px;
+      color: $chocolate;
+      display: block;
+      margin-bottom: 0;
+      font-family: $p;
+      font-weight: $regular;
+    }
+  }
+
+  .mapa-container {
+    width: 100%;
+  }
+
+  .mapa-ubicacion {
+    width: 100%;
+    min-height: 180px;
+    border: 0;
     display: block;
-    margin-bottom: 0;
-    font-family: $p;
-    font-weight: $regular;
   }
-  }
+
 //REDES
   .redes {
     display: flex;
@@ -74,5 +95,16 @@ footer {
         gap: 10px;
       }
     }
+  }
+
+  .redes a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icono-redes {
+    width: 32px;
+    height: 32px;
   }
 }

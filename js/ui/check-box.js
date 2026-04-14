@@ -1,9 +1,8 @@
-//FUNCION PARA EVITAR QUE SE ELEGAN MAS DE 4 VARIEDADES
+//-----------------------------------------------------------
+// UI y validacion
+const opcionesCheckbox = document.querySelectorAll(".opcion-checkbox");
 
-const checkboxes = document.querySelectorAll(".opcion-checkbox");
-
-//FUNCION PARA MOSTRAR UN DIALOGO DE LIMITE
-function mostrarDialogoLimite(mensaje) {
+function mostrarAlertaLimiteVariedades(mensaje) {
   if (!window.HTMLDialogElement) {
     alert(mensaje);
     return;
@@ -31,16 +30,15 @@ function mostrarDialogoLimite(mensaje) {
   dialog.showModal();
 }
 
-checkboxes.forEach((checkbox) => {
+//-----------------------------------------------------------
+// Eventos
+opcionesCheckbox.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
     const checked = document.querySelectorAll(".opcion-checkbox:checked");
 
     if (checked.length > 4) {
       checkbox.checked = false;
-      mostrarDialogoLimite("Podes elegir hasta 4 variedades.");
+      mostrarAlertaLimiteVariedades("Podes elegir hasta 4 variedades.");
     }
   });
 });
-
-
-

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -20,7 +20,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-   <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
 
 </head>
 
@@ -30,6 +30,11 @@
 
     <header class="header">
         <nav class="navbar">
+            <button class="nav-toggle" type="button" aria-label="Abrir men�" aria-expanded="false">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
             <div class="nav-left">
                 <ul class="nav-links">
                     <li><a href="../../../index.html">Inicio</a></li>
@@ -82,86 +87,89 @@
                 </article>
             </section>
 
-                        <section id="cookies" class="product">
-                                <div class="product-grid">
+            <section id="cookies" class="product">
+                <div class="product-grid">
 
-                                        <a href="../cookies/producto-1.html" class="product-link">
-                                                <article class="product-card" data-name="producto-1">
-                                                        <div class="product-label">Producto 1</div>
-                                                        <img src="../../../assets/product/cookies/producto-1.png" alt="Producto 1">
-                                                </article>
-                                        </a>
+                    <a href="../cookies/producto-1.html" class="product-link">
+                        <article class="product-card" data-name="producto-1">
+                            <div class="product-label">Producto 1</div>
+                            <img src="../../../assets/product/cookies/producto-1.png" alt="Producto 1">
+                        </article>
+                    </a>
 
-                                        <a href="../cookies/producto-2.html" class="product-link">
-                                                <article class="product-card" data-name="producto-2">
-                                                        <div class="product-label">Producto 2</div>
-                                                        <img src="../../../assets/product/cookies/producto-2.png" alt="Producto 2">
-                                                </article>
-                                        </a>
+                    <a href="../cookies/producto-2.html" class="product-link">
+                        <article class="product-card" data-name="producto-2">
+                            <div class="product-label">Producto 2</div>
+                            <img src="../../../assets/product/cookies/producto-2.png" alt="Producto 2">
+                        </article>
+                    </a>
 
-                                        <a href="../cookies/producto-3.html" class="product-link">
-                                                <article class="product-card" data-name="producto-3">
-                                                        <div class="product-label">Producto 3</div>
-                                                        <img src="../../../assets/product/cookies/producto-3.png" alt="Producto 3">
-                                                </article>
-                                        </a>
+                    <a href="../cookies/producto-3.html" class="product-link">
+                        <article class="product-card" data-name="producto-3">
+                            <div class="product-label">Producto 3</div>
+                            <img src="../../../assets/product/cookies/producto-3.png" alt="Producto 3">
+                        </article>
+                    </a>
 
-                                </div>
-                        </section>
-
-                </main>
-
-<!-- FOOTER -->
-
-    <footer class="footer">
-        <section class="footer-content">
-
-
-            <!-- CONTACTO -->
-
-            <div class="footer-block">
-                <h3>Contacto</h3>
-                <address>
-                    <p>Mail:</p>
-                    <p>Teléfono:</p>
-                </address>
-            </div>
-
-
-            <!-- UBICACIÃ“N -->
-
-            <div class="footer-block">
-                <h3>Ubicación</h3>
-                <div class="mapa-container">
-                    <iframe src="https://www.google.com/maps?q=San+Antonio+3892,+Manantiales,+CÃ³rdoba,+Argentina&output=embed"
-                        class="mapa-ubicacion" style="border:0;" allowfullscreen loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
                 </div>
-            </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+            <section class="footer-content">
 
 
-            <!-- REDES -->
+                <!-- CONTACTO -->
 
-            <div class="footer-block redes">
-                <h3>Seguinos en</h3>
-                <a href="https://www.instagram.com/martti.pasteleria/" target="_blank" rel="noopener">
-                    <img src="../../../assets/iconos/instagram.svg.png" alt="Instagram de PastelerÃ­a Martti"
-                        title="Instagram de PastelerÃ­a Martti" class="icono-redes">
-                </a>
-            </div>
-
-        </section>
-    </footer>
+                <div class="footer-block">
+                    <h3>Contacto</h3>
+                    <address>
+                        <p>Mail:</p>
+                        <p>Tel�fono:</p>
+                    </address>
+                </div>
 
 
-    <!------ JS ------>
+                <!-- UBICACIÓN -->
 
-    <script src="../../../js/main.js"></script>
-    <script src="../../../js/search.js"></script>
-    <script src="../../../js/cart.js"></script>
+                <div class="footer-block">
+                    <h3>Ubicaci�n</h3>
+                    <div class="mapa-container">
+                        <iframe
+                            src="https://www.google.com/maps?q=San+Antonio+3892,+Manantiales,+Córdoba,+Argentina&output=embed"
+                            class="mapa-ubicacion" style="border:0;" allowfullscreen loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
 
-        </body>
 
+                <!-- REDES -->
 
+                <div class="footer-block redes">
+                    <h3>Seguinos en</h3>
+                    <a href="https://www.instagram.com/martti.pasteleria/" target="_blank" rel="noopener">
+                        <img src="../../../assets/iconos/instagram.svg.png" alt="Instagram de Pastelería Martti"
+                            title="Instagram de Pastelería Martti" class="icono-redes">
+                    </a>
+                </div>
 
+            </section>
+        </footer>
+
+        <!-- Botón de WhatsApp -->
+        <a href="https://wa.me/5493512729694" class="floating-whatsapp">
+            <img src="../../../assets/iconos/icon_whatsapp.png"
+                alt="Icono de WhatsApp para contactarse con la pastelería">
+        </a>
+
+        <!------ JS ------>
+
+        <script src="../../../js/main.js"></script>
+        <script src="../../../js/search.js"></script>
+        <script src="../../../js/cart.js"></script>
+
+    </body>
