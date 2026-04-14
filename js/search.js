@@ -1,6 +1,7 @@
+//---------------- Archivo search.js cargado
 console.log("Buscador de Pasteleria Martti");
 
-//---------------- Utilidades de texto
+//---------------- Normalizacion de texto para busqueda
 function normalizarTexto(texto) {
   return String(texto || "")
     .normalize("NFD")
@@ -10,12 +11,15 @@ function normalizarTexto(texto) {
 }
 
 //---------------- Base y catalogo
+
+//FUNCION PARA OBTENER LA BASE DEL PROYECTO, UTILIZADA PARA CONSTRUIR RUTAS RELATIVAS A IMAGENES Y PAGINAS DE PRODUCTOS
 function obtenerBaseProyecto() {
   let script = document.querySelector('script[src$="js/search.js"]');
   if (!script) return "";
   return script.getAttribute("src").replace(/js\/search\.js$/, "");
 }
 
+//FUNCION PARA OBTENER LAS CATEGORIAS DEL CATALOGO
 function obtenerCategoriasCatalogo() {
   if (typeof pasteleriaMartti === "undefined" || !pasteleriaMartti.productos) {
     return [];
@@ -24,6 +28,7 @@ function obtenerCategoriasCatalogo() {
   return Object.keys(pasteleriaMartti.productos);
 }
 
+//FUNCION PARA OBTENER TODOS LOS PRODUCTOS
 function obtenerTodosLosProductos() {
   let categorias = obtenerCategoriasCatalogo();
   let productos = [];
@@ -44,6 +49,8 @@ function obtenerTodosLosProductos() {
 }
 
 //---------------- Busqueda
+
+//FUNCION PARA BUSCAR POR CATEGORIA, COMPARANDO EL TERMINO DE BUSQUEDA CON LOS NOMBRES DE LAS CATEGORIAS Y RETORNANDO LOS RESULTADOS EN UN FORMATO UNIFICADO
 function buscarPorCategoria(busqueda) {
   let termino = normalizarTexto(busqueda);
   let categorias = obtenerCategoriasCatalogo();
@@ -61,6 +68,7 @@ function buscarPorCategoria(busqueda) {
     });
 }
 
+//FUNCION PARA BUSCAR POR NOMBRE, COMPARANDO EL TERMINO DE BUSQUEDA CON LOS NOMBRES DE LOS PRODUCTOS Y RETORNANDO LOS RESULTADOS EN UN FORMATO UNIFICADO
 function buscarPorNombre(busqueda) {
   let termino = normalizarTexto(busqueda);
   let productos = obtenerTodosLosProductos();
@@ -79,6 +87,8 @@ function buscarPorNombre(busqueda) {
     });
 }
 
+
+//FUNCION PARA COMBINAR LAS LISTAS DE RESULTADOS EN UNA SOLA LISTA SIN DUPLICADOS
 function combinarSinDuplicados(listas) {
   let mapa = {};
   listas.forEach(function (lista) {
@@ -90,6 +100,8 @@ function combinarSinDuplicados(listas) {
   return Object.values(mapa);
 }
 
+
+//FUNCION PARA OBTENER LOS RESULTADOS DE LA BUSQUEDA
 function obtenerResultadosBusqueda(termino) {
   return combinarSinDuplicados([
     buscarPorCategoria(termino),
@@ -98,6 +110,8 @@ function obtenerResultadosBusqueda(termino) {
 }
 
 //---------------- Rutas e imagenes
+
+//FUNCION PARA OBTENER LA RUTA DE LA CATEGORIA
 function obtenerRutaCategoria(categoria) {
   let base = obtenerBaseProyecto();
   let mapa = {
@@ -110,6 +124,7 @@ function obtenerRutaCategoria(categoria) {
   return base + (mapa[categoria] || "pages/productos.html");
 }
 
+//FUNCION PARA OBTENER LA RUTA DEL PRODUCTO
 function obtenerRutaProducto(item) {
   let base = obtenerBaseProyecto();
   let key = normalizarTexto(item.nombre);
@@ -168,7 +183,7 @@ function obtenerRutaProducto(item) {
   return obtenerRutaCategoria(item.categoria);
 }
 
-// Funcion para obtener la imagen de un producto
+// FUNCION PARA OBTENER LA IMAGEN DEL PRODUCTO
 function obtenerImagenProducto(item) {
   let base = obtenerBaseProyecto();
   let key = normalizarTexto(item.nombre);
@@ -225,7 +240,7 @@ function obtenerImagenProducto(item) {
   return mapa[key] ? base + mapa[key] : "";
 }
 
-// Funcion para obtener la imagen de la categoria
+// FUNCION PARA OBTENER LA IMAGEN DE LA CATEGORIA
 function obtenerImagenCategoria(categoria) {
   let base = obtenerBaseProyecto();
   let mapa = {
@@ -238,11 +253,14 @@ function obtenerImagenCategoria(categoria) {
 }
 
 //---------------- Render en pagina
+
+// FUNCION PARA RENDERIZAR LOS RESULTADOS DE LA BUSQUEDA EN FORMATO DE CARDS DENTRO DE LA GRILLA DE PRODUCTOS
 function obtenerContenedorResultados() {
   return document.querySelector(".products-grid-category, .product-grid");
 }
 
 let htmlOriginalGrid = null;
+
 
 function renderizarResultadosEnCards(resultados, termino) {
   let grid = obtenerContenedorResultados();
@@ -292,6 +310,8 @@ function renderizarResultadosEnCards(resultados, termino) {
 }
 
 //---------------- Drawer de busqueda
+
+// FUNCION PARA CREAR EL DRAWER DE BUSQUEDA, CON SU ESTRUCTURA HTML Y EVENTOS DE CIERRE
 function crearDrawerBusqueda() {
   let overlay = document.createElement("div");
   overlay.className = "search-drawer-overlay";
@@ -326,6 +346,8 @@ function crearDrawerBusqueda() {
   };
 }
 
+
+// FUNCION PARA RENDERIZAR LOS RESULTADOS DE LA BUSQUEDA DENTRO DEL DRAWER, CON MINI CARDS Y ENLACES A PRODUCTOS Y CATEGORIAS
 function renderizarResultadosEnDrawer(ui, resultados, termino) {
   if (!ui) return;
 
@@ -373,6 +395,8 @@ function renderizarResultadosEnDrawer(ui, resultados, termino) {
 }
 
 //---------------- Inicializacion
+
+// FUNCION PARA INICIALIZAR EL BUSCADOR DESDE EL DOM
 function inicializarBuscadorDOM() {
   let input = document.querySelector(".search-input");
   let searchPill = document.querySelector(".search-pill");
@@ -381,6 +405,8 @@ function inicializarBuscadorDOM() {
   let ui = crearDrawerBusqueda();
   let abierta = false;
 
+
+  // FUNCION PARA ABRIR EL DRAWER DE BUSQUEDA, CON UN VALOR INICIAL EN EL INPUT Y EJECUTANDO LA BUSQUEDA CORRESPONDIENTE
   function abrirDrawer(valorInicial) {
     if (!abierta) {
       ui.overlay.classList.add("is-open");
@@ -392,12 +418,14 @@ function inicializarBuscadorDOM() {
     setTimeout(function () { ui.input.focus(); }, 0);
   }
 
+  // FUNCION PARA CERRAR EL DRAWER
   function cerrarDrawer() {
     ui.overlay.classList.remove("is-open");
     document.body.classList.remove("search-drawer-open");
     abierta = false;
   }
 
+  // FUNCION PARA EJECUTAR LA BUSQUEDA
   function ejecutarBusqueda(valor) {
     let termino = normalizarTexto(valor);
     let resultados = obtenerResultadosBusqueda(termino);
@@ -446,4 +474,5 @@ function inicializarBuscadorDOM() {
   });
 }
 
+//---------------- Inicializacion al cargar el DOM
 document.addEventListener("DOMContentLoaded", inicializarBuscadorDOM);

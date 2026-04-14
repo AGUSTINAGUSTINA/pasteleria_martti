@@ -1,4 +1,13 @@
-//---------------- UI y alertas
+//---------------- Archivo contacto.js cargado
+console.log("contacto.js cargado");
+
+
+
+//FUNCIONES PARA EL FORMULARIO DE CONTACTO Y ENVIO POR WHATSAPP
+
+//---------------- Alertas
+
+// FUNCION PARA MOSTRAR UNA ALERTA PERSONALIZADA, UTILIZANDO EL ELEMENTO <dialog> SI EL NAVEGADOR LO SOPORTA, O CAE BACK A UN ALERT NORMAL SI NO ES ASI
 function mostrarAlertaContacto(mensaje) {
   if (!window.HTMLDialogElement || !HTMLDialogElement.prototype.showModal) {
     alert(mensaje);
@@ -28,6 +37,8 @@ function mostrarAlertaContacto(mensaje) {
 }
 
 //---------------- Envio
+
+// FUNCION PARA ENVIAR EL FORMULARIO DE CONTACTO POR WHATSAPP, VALIDANDO LOS CAMPOS REQUERIDOS Y FORMATEANDO EL MENSAJE DE MANERA LEGIBLE
 function enviarContactoPorWhatsapp() {
   const nombre = document.getElementById("nombre").value;
   const email = document.getElementById("email").value;
@@ -46,6 +57,8 @@ function enviarContactoPorWhatsapp() {
 }
 
 //---------------- Eventos
+
+// Agregadon de evento al botón de WhatsApp para enviar el formulario de contacto
 const botonWhatsapp = document.querySelector(".btn-whatsapp");
 if (botonWhatsapp) {
   botonWhatsapp.addEventListener("click", function (e) {
@@ -53,7 +66,7 @@ if (botonWhatsapp) {
     enviarContactoPorWhatsapp();
   });
 }
-
+// Previniendo el envío del formulario tradicional para evitar recargas de página
 const form = document.getElementById("contactForm");
 if (form) {
   form.addEventListener("submit", function (e) {

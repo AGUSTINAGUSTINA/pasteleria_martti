@@ -1,13 +1,15 @@
+//---------------- Archivo cart.js cargado
 console.log("Carrito de Pasteleria Martti (DOM)");
 
-//---------------- Estado y configuracion
+
+//---------------- Variables globales
 const claveStorageCarrito = "pasteleria_martti_carrito";
 let carrito = [];
 let uiCarrito = null;
 let uiFinalizarCompra = null;
 const numWhatsapp = "5493512729694";
 
-//---------------- Persistencia
+//---------------- Storage
 function cargarCarrito() {
   let guardado = localStorage.getItem(claveStorageCarrito);
 
@@ -18,11 +20,12 @@ function cargarCarrito() {
   }
 }
 
+//USO DE JSON
 function guardarCarrito() {
   localStorage.setItem(claveStorageCarrito, JSON.stringify(carrito));
 }
 
-//---------------- Estado UI
+//---------------- Contador y vista del carrito 
 function actualizarContadorCarrito() {
   let totalItems = carrito.length;
   let contadores = document.querySelectorAll(".cart-count");
@@ -32,11 +35,12 @@ function actualizarContadorCarrito() {
   });
 }
 
+// FUNCION DE ACTUALIZAR VISTA DEL CARRITO 
 function actualizarVistaCarrito() {
   actualizarContadorCarrito();
 }
 
-//---------------- Notificacion de producto agregado al carrito
+//---------------- Uso de libreria externa: Toastify + Promesa para carga asincronica
 //USO DE TOASTIFY
 let toastifyCarga = null;
 //USO DE PROMISE
@@ -64,7 +68,7 @@ function cargarToastify() {
 
   return toastifyCarga;
 }
-
+//FUNCION DE MOSTRAR NOTIFICACÓN DE PRODUCTO AGREGADO
 function mostrarToastProductoAgregado(nombreProducto) {
   let nombre = String(nombreProducto || "").trim();
   let textoNombre = nombre || "El producto";
@@ -130,11 +134,13 @@ function mostrarToastProductoAgregado(nombreProducto) {
     .catch(function () {});
 }
 
-//---------------- Formato y catalogo
+//---------------- Formateo y sincronizacion de precios con el catalogo
+// FUNCION PARA FORMATEAR NUMEROS A MONEDA LOCAL
 function formatearMoneda(numero) {
   return new Intl.NumberFormat("es-AR").format(Number(numero) || 0);
 }
 
+// FUNCION PARA NORMALIZAR TEXTO
 function claveProducto(texto) {
   return String(texto || "")
     .normalize("NFD")
@@ -143,6 +149,7 @@ function claveProducto(texto) {
     .trim();
 }
 
+// FUNCION PARA CREAR INDICE DE PRODUCTOS
 function crearIndiceCatalogoProductos() {
   let indice = {};
   if (typeof pasteleriaMartti === "undefined" || !pasteleriaMartti.productos) return indice;
@@ -163,6 +170,7 @@ function crearIndiceCatalogoProductos() {
   return indice;
 }
 
+// FUNCION PARA SINCRONIZAR PRECIOS EN EL CATALOGO CON LOS DATOS DEFINIDOS EN pasteleriaMartti.productos
 function sincronizarPreciosCatalogo() {
   let indice = crearIndiceCatalogoProductos();
   if (!Object.keys(indice).length) return;
@@ -193,7 +201,9 @@ function sincronizarPreciosCatalogo() {
   });
 }
 
-//---------------- UI: creacion
+//---------------- UI: creacion de drawer y modal
+
+// FUNCION PARA CREAR EL DRAWER DEL CARRITO
 function crearDrawerCarrito() {
   let overlay = document.createElement("div");
   overlay.className = "cart-drawer-overlay";
@@ -224,6 +234,7 @@ function crearDrawerCarrito() {
   };
 }
 
+// FUNCION PARA CREAR EL MODAL DE FINALIZACION DE COMPRA
 function crearModalFinalizarCompra() {
   let overlay = document.createElement("div");
   overlay.className = "checkout-modal-overlay";
@@ -261,12 +272,15 @@ function crearModalFinalizarCompra() {
 }
 
 //---------------- UI: render
+
+// FUNCION PARA CALCULAR EL TOTAL DEL CARRITO
 function calcularTotalCarrito() {
   return carrito.reduce(function (acc, item) {
     return acc + (Number(item.precio) || 0);
   }, 0);
 }
 
+// FUNCION PARA RENDERIZAR EL CONTENIDO DEL DRAWER DEL CARRITO
 function renderizarDrawerCarrito() {
   if (!uiCarrito) return;
 
@@ -303,6 +317,7 @@ function renderizarDrawerCarrito() {
   uiCarrito.total.textContent = "$" + formatearMoneda(subtotal);
 }
 
+// FUNCION PARA RENDERIZAR EL CONTENIDO DEL MODAL DE FINALIZACION DE COMPRA
 function renderizarModalFinalizarCompra() {
   if (!uiFinalizarCompra) return;
 
@@ -337,7 +352,9 @@ function renderizarModalFinalizarCompra() {
   uiFinalizarCompra.total.textContent = "$" + formatearMoneda(total);
 }
 
-//---------------- UI: opciones
+//---------------- UI: muestra de opciones seleccionadas en el carrito
+
+// FUNCION PARA OBTENER EL TEXTO DE UNA OPCION SELECCIONADA (RADIO, CHECKBOX O SELECT)
 function obtenerTextoOpcion(input) {
   let label = input.closest("label");
   if (label) return label.textContent.replace(/\s+/g, " ").trim();
@@ -345,6 +362,7 @@ function obtenerTextoOpcion(input) {
   return input.name || "Opcion";
 }
 
+// FUNCION PARA OBTENER LAS OPCIONES SELECCIONADAS DE UN PRODUCTO A PARTIR DE UN BOTON DENTRO DE SU CONTENEDOR
 function obtenerOpcionesSeleccionadas(button) {
   let info = button.closest(".info-producto");
   if (!info) return [];
@@ -371,6 +389,7 @@ function obtenerOpcionesSeleccionadas(button) {
   return seleccionadas;
 }
 
+// FUNCION PARA OBTENER LOS DATOS DEL PRODUCTO A PARTIR DE UN BOTON, BUSCANDO EN SUS DATA-ATTRIBUTES Y EN SU CONTENEDOR PADRE SI NO SE ENCUENTRAN
 function obtenerDatosProductoDesdeBoton(button) {
   let nombre = button.dataset.product || "";
   let precio = Number(button.dataset.price) || 0;
@@ -403,6 +422,8 @@ function obtenerDatosProductoDesdeBoton(button) {
 }
 
 //---------------- Acciones
+
+// FUNCION PARA AGREGAR UN PRODUCTO AL CARRITO, RECIBIENDO EL NOMBRE, PRECIO, CATEGORIA Y OPCIONES SELECCIONADAS
 function agregarAlCarrito(producto, categoria, opciones) {
   let item = {
     nombre: "",
@@ -428,6 +449,7 @@ function agregarAlCarrito(producto, categoria, opciones) {
   mostrarToastProductoAgregado(item.nombre);
 }
 
+// FUNCION PARA ELIMINAR UN PRODUCTO DEL CARRITO A PARTIR DE SU INDICE EN EL ARRAY
 function eliminarDelCarrito(index) {
   if (index < 0 || index >= carrito.length) return;
   carrito.splice(index, 1);
@@ -437,6 +459,8 @@ function eliminarDelCarrito(index) {
 }
 
 //---------------- UI: apertura y cierre
+
+// FUNCION PARA ABRIR EL DRAWER DEL CARRITO
 function abrirDrawerCarrito() {
   if (!uiCarrito) return;
   renderizarDrawerCarrito();
@@ -444,16 +468,18 @@ function abrirDrawerCarrito() {
   document.body.classList.add("cart-drawer-open");
 }
 
+// FUNCION PARA CERRAR EL DRAWER DEL CARRITO
 function cerrarDrawerCarrito() {
   if (!uiCarrito) return;
   uiCarrito.overlay.classList.remove("is-open");
   document.body.classList.remove("cart-drawer-open");
 }
 
+// FUNCION PARA MOSTRAR EL CARRITO (ABRIR EL DRAWER)
 function mostrarCarrito() {
   abrirDrawerCarrito();
 }
-
+// FUNCION PARA ABRIR EL MODAL DE FINALIZACION DE COMPRA
 function abrirModalFinalizarCompra() {
   if (!uiFinalizarCompra) return;
   renderizarModalFinalizarCompra();
@@ -461,13 +487,16 @@ function abrirModalFinalizarCompra() {
   document.body.classList.add("checkout-modal-open");
 }
 
+// FUNCION PARA CERRAR EL MODAL DE FINALIZACION DE COMPRA
 function cerrarModalFinalizarCompra() {
   if (!uiFinalizarCompra) return;
   uiFinalizarCompra.overlay.classList.remove("is-open");
   document.body.classList.remove("checkout-modal-open");
 }
 
-//---------------- Finalizacion
+//---------------- Finalizacion de compra
+
+// FUNCION PARA CREAR EL MENSAJE DE WHATSAPP CON EL RESUMEN DEL PEDIDO, FORMATEANDOLO DE MANERA LEGIBLE
 function crearMensajeFinalizacionWhatsapp() {
   let msjWhatsapp = [
     "Hola! quisiera continuar con el pago del siguiente pedido:",
@@ -489,6 +518,7 @@ function crearMensajeFinalizacionWhatsapp() {
   return msjWhatsapp.join("\n");
 }
 
+// FUNCION PARA ENVIAR EL PEDIDO POR WHATSAPP, ABRIENDO UNA NUEVA VENTANA CON LA URL DE WHATSAPP 
 function comprarPorWhatsApp() {
   if (!carrito.length) return;
   let mensaje = crearMensajeFinalizacionWhatsapp();
@@ -496,7 +526,9 @@ function comprarPorWhatsApp() {
   window.open(url, "_blank");
 }
 
-//---------------- Inicializacion
+//---------------- Inicializacion 
+
+// FUNCION PARA INICIALIZAR EL CARRITO, CARGANDO LOS DATOS DEL STORAGE, ACTUALIZANDO LA VISTA, SINCRONIZANDO LOS PRECIOS CON EL CATALOGO Y CREANDO LOS ELEMENTOS DEL DRAWER Y MODAL
 function inicializarCarritoDOM() {
   cargarCarrito();
   actualizarVistaCarrito();
@@ -585,8 +617,9 @@ function inicializarCarritoDOM() {
   });
 }
 
+//---------------- Exposicion de funciones globales para uso en el HTML
 window.agregarAlCarrito = agregarAlCarrito;
 window.mostrarCarrito = mostrarCarrito;
 window.carrito = carrito;
-
+//---------------- Inicializacion al cargar el DOM
 document.addEventListener("DOMContentLoaded", inicializarCarritoDOM);

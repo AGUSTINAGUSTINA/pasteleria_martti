@@ -1,9 +1,16 @@
+//---------------- archivo min.js cargado
+console.log("main.js cargado");
+
+
 //---------------- Datos base del proyecto
 const pasteleriaMartti = {
   nombre: "Pasteleria Martti",
   productos: []
 };
 
+
+
+//FUNCION CONSTRUCTORA DE PRODUCTOS CON NOMBRE Y PRECIO
 class Producto {
   constructor(nombre, precio) {
     this.nombre = nombre;
@@ -38,7 +45,8 @@ const postres = [
   new Producto("Tiramisu", 34000),
   new Producto("Pavlova", 43000),
   new Producto("Blondie", 46000),
-  new Producto("Marquise clasica", 46000)
+  new Producto("Marquise clasica", 46000),
+  new Producto("Nube de nuez", 39000)
 ];
 
 const otrosProductos = [
@@ -65,6 +73,7 @@ const otrosProductos = [
   new Producto("Box alfajores", 20000)
 ];
 
+// Agregando los productos al objeto global de la pasteleria
 pasteleriaMartti.productos = {
   tartas,
   tortas,
@@ -76,12 +85,24 @@ pasteleriaMartti.productos = {
 window.pasteleriaMartti = pasteleriaMartti;
 
 //---------------- Interaccion UI
+
+//FUNCION PRINCIPAL: INICIALIZACION DE FUNCIONES AL CARGAR EL DOM, COMO EL MENU RESPONSIVE Y LA CARGA DE RESEÑAS
 function inicializarMain() {
   console.log("Main.js cargado correctamente");
   inicializarMenuResponsive();
   cargarResenas();
 }
 
+
+
+//FUNCIONES AUXILIARES:
+
+// FUNCION PARA INICIALIZAR EL MENU RESPONSIVE 
+/*
+Decidí hacerlo con js en vez de con boostrap para tener un control total sobre 
+la estructura y el comportamiento, ademas de practicar manipulación del DOM y 
+eventos
+*/
 function inicializarMenuResponsive() {
   const navbars = document.querySelectorAll(".navbar");
   navbars.forEach((navbar) => {
@@ -103,6 +124,7 @@ function inicializarMenuResponsive() {
   });
 }
 
+//FUNCION PARA ESCAPAR CARACTERES ESPECIALES
 function escapeHtml(value) {
   return String(value || "")
     .replace(/&/g, "&amp;")
@@ -113,7 +135,7 @@ function escapeHtml(value) {
 }
 
 //CONSULTA DE RESEÑAS SIMULADAS DESDE API EXTERNA
-
+//FUNCION PARA CARGAR RESEÑAS
 function cargarResenas() {
   const grid = document.querySelector(".reviews-grid");
   if (!grid) return;
@@ -126,10 +148,8 @@ function cargarResenas() {
     "pavlova",
     "tarta de peras",
     "chocotorta",
-    "alfajores",
     "cookies",
     "mousse de chocolate",
-    "pan dulce",
     "mini tartas",
     "petit fours"
   ];
@@ -163,6 +183,8 @@ function cargarResenas() {
     "Volveria a pedir la {producto}. {detalle}"
   ];
 
+
+  // FUNCION PARA ACTUALIZAR EL MENSAJE DE ESTADO DE LA INTERFAZ
   function setStatus(mensaje) {
     if (!status) return;
     if (!mensaje) {
@@ -175,10 +197,13 @@ function cargarResenas() {
 
   setStatus("Cargando resenas...");
 
+
+  // FUNCION PARA SELECCIONAR UN ELEMENTO ALEATORIO DE UNA LISTA, UTILIZADA PARA GENERAR RESEÑAS VARIADAS A PARTIR DE PLANTILLAS Y DETALLES PREDEFINIDOS
   function elegirAleatorio(lista) {
     return lista[Math.floor(Math.random() * lista.length)];
   }
 
+  // FUNCION PARA ARMAR UNA RESEÑA A PARTIR DE UN PRODUCTO Y UN DETALLE
   function armarResena(producto, detalle) {
     const plantilla = elegirAleatorio(plantillasResena);
     return plantilla
@@ -186,6 +211,7 @@ function cargarResenas() {
       .replace("{detalle}", detalle);
   }
 
+  // FUNCION PARA OBTENER UN DETALLE ALEATORIO A PARTIR DE UN COMENTARIO
   function obtenerDetalleDesdeComentario(comentario) {
     const texto = String(comentario || "");
     if (!texto) return elegirAleatorio(detallesPasteleria);
@@ -193,6 +219,7 @@ function cargarResenas() {
     return detallesPasteleria[indice];
   }
 
+  // FUNCION PARA OBTENER UN NOMBRE ALEATORIO A PARTIR DE UN USUARIO
   function renderStars(rating) {
     let stars = "";
     for (let i = 1; i <= 5; i += 1) {
@@ -259,5 +286,3 @@ function cargarResenas() {
 
 document.addEventListener("DOMContentLoaded", inicializarMain);
 
-//---------------- Ajustes de catalogo
-postres.unshift(new Producto("Nube de nuez", 39000));
