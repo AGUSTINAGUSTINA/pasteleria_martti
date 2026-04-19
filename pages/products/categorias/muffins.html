@@ -30,7 +30,7 @@
 
     <header class="header">
         <nav class="navbar">
-            <button class="nav-toggle" type="button" aria-label="Abrir men�" aria-expanded="false">
+            <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
                 <span class="nav-toggle-bar"></span>
                 <span class="nav-toggle-bar"></span>
                 <span class="nav-toggle-bar"></span>
@@ -82,37 +82,55 @@
 
             <section class="products-grid-title">
                 <article class="product-card-title">
-                    <img src="../../../assets/product/muffins.png" alt="Muffins">
+                    <img src="../../../assets/product/muffins/title-muffin.png" alt="Muffins">
                     <h1>Muffins</h1>
                 </article>
             </section>
 
-            <section id="muffins" class="product">
-                <div class="product-grid">
 
-                    <a href="../muffins/producto-1.html" class="product-link">
-                        <article class="product-card" data-name="producto-1">
-                            <div class="product-label">Producto 1</div>
-                            <img src="../../../assets/product/muffins/producto-1.png" alt="Producto 1">
-                        </article>
-                    </a>
+            <!-- GALERIA MUFFINS -->
 
-                    <a href="../muffins/producto-2.html" class="product-link">
-                        <article class="product-card" data-name="producto-2">
-                            <div class="product-label">Producto 2</div>
-                            <img src="../../../assets/product/muffins/producto-2.png" alt="Producto 2">
-                        </article>
-                    </a>
 
-                    <a href="../muffins/producto-3.html" class="product-link">
-                        <article class="product-card" data-name="producto-3">
-                            <div class="product-label">Producto 3</div>
-                            <img src="../../../assets/product/muffins/producto-3.png" alt="Producto 3">
-                        </article>
-                    </a>
+            <div class="producto-detalle">
 
+                <div class="galeria">
+                    <img id="imagenPrincipal" src="../../../assets/product/muffins/mufin1.png" class="imagen-grande"
+                        alt="Muffins">
+
+                    <div class="miniaturas">
+                        <img src="../../../assets/product/muffins/muffin2.png" class="miniatura" alt="Muffins">
+                        <img src="../../../assets/product/muffins/mufin3.png" class="miniatura" alt="Muffins">
+                    </div>
                 </div>
-            </section>
+
+
+
+                <div class="info-producto">
+                    <h2>Muffins de frutos rojos</h2>
+
+                    <p>
+                       Suave, esponjoso y lleno de sabor…
+                    </p>
+
+                    <p>
+                      El <strong>Muffin de frutos rojos</strong> combina una masa liviana y húmeda con frutos rojos frescos que aportan ese toque justo de dulzura y acidez.
+                    </p>
+                    <p>
+                         Ideal para acompañar un café, matecitos, un momento de pausa… o simplemente darte un gusto.
+                    </p>
+                     <p>
+                        <strong>Y vos...¿Ya los probaste??</strong>
+                    </p>
+                    <h3>$4.000</h3>
+                    <button type="button" data-action="add-to-cart" data-product="Muffins" data-price="4000"
+                        data-category="muffins">
+                        Agregar al carrito
+                    </button>
+                </div>
+
+            </div>
+
+
 
         </main>
 
@@ -128,7 +146,7 @@
                     <h3>Contacto</h3>
                     <address>
                         <p>Mail:</p>
-                        <p>Tel�fono:</p>
+                        <p>Teléfono:</p>
                     </address>
                 </div>
 
@@ -136,7 +154,7 @@
                 <!-- UBICACIÓN -->
 
                 <div class="footer-block">
-                    <h3>Ubicaci�n</h3>
+                    <h3>Ubicación</h3>
                     <div class="mapa-container">
                         <iframe
                             src="https://www.google.com/maps?q=San+Antonio+3892,+Manantiales,+Córdoba,+Argentina&output=embed"
@@ -165,13 +183,14 @@
             <img src="../../../assets/iconos/icon_whatsapp.png"
                 alt="Icono de WhatsApp para contactarse con la pastelería">
         </a>
-        
+
         <!------ JS ------>
 
         <script src="../../../js/main.js"></script>
         <script src="../../../js/search.js"></script>
         <script src="../../../js/cart.js"></script>
-
+        <script src="../../../js/ui/gallery.js"></script>
+        <script src="../../../js/cantidad.js"></script>
     </body>
 
 </html>

@@ -424,7 +424,14 @@ function obtenerDatosProductoDesdeBoton(button) {
 //---------------- Acciones
 
 // FUNCION PARA AGREGAR UN PRODUCTO AL CARRITO, RECIBIENDO EL NOMBRE, PRECIO, CATEGORIA Y OPCIONES SELECCIONADAS
-function agregarAlCarrito(producto, categoria, opciones) {
+// `config` permite personalizar el comportamiento sin romper llamados existentes:
+// - `silent`: no muestra toast
+// - `skipUpdate`: no guarda/actualiza vista (para batch)
+function agregarAlCarrito(producto, categoria, opciones, config) {
+  config = config && typeof config === "object" ? config : {};
+  let silent = Boolean(config.silent);
+  let skipUpdate = Boolean(config.skipUpdate);
+
   let item = {
     nombre: "",
     precio: 0,
@@ -444,9 +451,13 @@ function agregarAlCarrito(producto, categoria, opciones) {
   }
 
   carrito.push(item);
-  guardarCarrito();
-  actualizarVistaCarrito();
-  mostrarToastProductoAgregado(item.nombre);
+  if (!skipUpdate) {
+    guardarCarrito();
+    actualizarVistaCarrito();
+  }
+  if (!silent) {
+    mostrarToastProductoAgregado(item.nombre);
+  }
 }
 
 // FUNCION PARA ELIMINAR UN PRODUCTO DEL CARRITO A PARTIR DE SU INDICE EN EL ARRAY

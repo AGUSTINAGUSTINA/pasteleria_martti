@@ -51,7 +51,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(90, 58, 46, 0.45); // chocolate suave
+    background-color: rgba(90, 58, 46, 0.45); 
     transition: background-color 0.3s ease;
   }
 
@@ -66,7 +66,7 @@
 
     font-family: $h; 
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: 700;
     color: white;
     letter-spacing: 0.5px;
     margin: 0;

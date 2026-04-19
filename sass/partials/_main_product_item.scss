@@ -12,7 +12,9 @@
 
     .imagen-grande {
       width: 65%;
-      height: 65%;
+      height: auto;
+      max-height: 520px;
+      display: block;
       border-radius: 10px;
     }
 
@@ -85,7 +87,8 @@
     margin-bottom: 10px;
   }
 
-  input[type="checkbox"] {
+  input[type="checkbox"],
+  input[type="radio"] {
     accent-color: $rosa-oscuro;
     cursor: pointer;
   }

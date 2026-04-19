@@ -1,45 +1,46 @@
 // ENTREGA FINAL 
 
-En esta entrega final detalle lo agregado durante el ultimo mes para cumplir con los requisitos: consumo de API real, asincronismo, promesas y HTML dinamico.
+Aquí detallo lo agregado desde la prentrega 2 y esta entrega final: para cumplir con los requisitos: consumo de API real, asincronismo, promesas y HTML dinamico.
 
 1) Consumo de datos desde API externa (fetch)
-- Use dos APIs reales para simular rese�as de clientes:
+- Utilicé dos APIs reales para simular reseñas de clientes:
   a) DummyJSON (comments): https://dummyjson.com/comments
+     De DummyJSON obtuve los 'likes' para calcular las estrellas de cada reseña, y utilicé los comentarios como base para generar reseñas personalizadas en español, referidas a productos de pastelería. Estas se muestran como tarjetas con contenido creado de manera manual y aleatoria.
   b) RandomUser: https://randomuser.me/api/
+     De randomUser obtuve los avatar y ciudad para cada usuario. Los nombres los genero de manera manual para que sean comunes en español y asi aportar mas realismo a las reseñas, y las fotos de las personas
+    si se obtienen de la API.
 - Con Promise.all() hago dos fetch en paralelo y combino los datos.
-- Uso .then() / .catch() para manejar promesas y errores.
+- Uso .then() para manejar el éxito (lo que se resolvió) 
+- Uso catch() para manejar el error (lo que se rechazó).
 
 2) Asincronismo y promesas
 - fetch es asincrono y lo manejo con Promise.all + then/catch.
 - Si falla la API muestro mensaje de estado al usuario.
+- Promesa para carga asincronica de la notificacines con Toastify
 
-3) HTML interactivo generado desde JS
+3) Uso de libreria externa: Toastify
+
+4) HTML interactivo generado desde JS
 - Cree una seccion de resenas en index.html.
 - Renderizo cards de resenas con innerHTML en .reviews-grid.
-- Cada card incluye foto, nombre, ciudad y texto de resena.
+- Cada card incluye foto, nombre, ciudad y texto de reseña.
 
-4) Transformacion de datos para adaptar al rubro pasteleria
+5) Transformacion de datos para adaptar al rubro pasteleria
 - Cree plantillas de texto y productos de pasteleria para que las resenas tengan coherencia con el negocio.
-- Uso el body/likes de la API como semilla para variar el detalle y calcular rating.
-- El rating se muestra con estrellas (5) en lugar de texto 4/5.
+- Uso los likes de la API para mostrar la calificacion en forma de estrellas para que sea mas visual para el usuario
 
-5) UI/UX y responsive
-- Header responsive con menu hamburguesa (nav-toggle) y apertura/cierre por JS.
+
+6) UI/UX y responsive
+- Header responsive con menu hamburguesa (nav-toggle) y apertura/cierre por JS. (Decidí hacerlo con js en vez de con boostrap para practicar manipulación del DOM y 
+eventos)
 - Footer responsive (flex wrap, centrado, mapa responsive).
 - Ajustes de iconos y centrado en el bloque de redes.
 
-6) Metodos y herramientas de JS usados
+7) Metodos y herramientas de JS usados
 - Promise.all, fetch, then, catch
 - querySelector, querySelectorAll, addEventListener
 - innerHTML, classList, setAttribute
-- map, slice, Math.round, Math.min, Math.max
 
-7) Accesibilidad basica
-- aria-label en botones y estados
-- sr-only para lectores de pantalla en estrellas
-
-Con esto se cumple:
-- Consumo de API real
-- Asincronismo y promesas
-- HTML dinamico desde JS
-- Logica de negocio visible (resenas para la pasteleria)
+8) Agregué 2 archivos js más:
+- Uno para la lógica de radio button para productos en los que se tiene que selecciona una u otra opción (box nadidad)
+- Otro para la lógica de cantidad de productos (en productos pequeños como alfajores)

@@ -44,7 +44,7 @@ const postres = [
   new Producto("Rogel", 38000),
   new Producto("Tiramisu", 34000),
   new Producto("Pavlova", 43000),
-  new Producto("Blondie", 46000),
+  new Producto("Blondie de frutos rojos", 46000),
   new Producto("Marquise clasica", 46000),
   new Producto("Nube de nuez", 39000)
 ];
@@ -54,23 +54,25 @@ const otrosProductos = [
   new Producto("Petit fours", 38000),
   new Producto("Lingotes", 43000),
   new Producto("Mini Tartas", 43000),
-  new Producto("Huevos de Pascua", 28000),
+  new Producto("Huevo de Pascua Franuí", 50000),
+  new Producto("Huevo de Pascua Pistacho", 50000),
+  new Producto("Huevo de Pascua Tiramisú", 38000),
+  new Producto("Huevo de Pascua Oreo", 40000),
   new Producto("Pan dulce Dubai", 28000),
   new Producto("Pan dulce Nutella", 28000),
   new Producto("Cookies New York", 3400),
   new Producto("Cookies Red Velvet", 3400),
   new Producto("Chipa", 2900),
-  new Producto("Tableta de chocolate Dubai", 24000),
+  new Producto("Tableta de chocolate Dubai", 27000),
+  new Producto("Tableta de chocolate con almendras", 22000),
+  new Producto("Tableta de chocolate blanco con oreo", 24000),
   new Producto("Alfajores Dubai", 5000),
   new Producto("Alfajores dulce de leche y nuez", 3300),
   new Producto("Alfajores de maicena", 3000),
-  new Producto("Desayuno sorpresa", 3900),
-  new Producto("Box Dia de la madre", 40000),
-  new Producto("Box Dia del padre", 40000),
+  new Producto("Box desayuno sorpresa", 39000),
   new Producto("Box Navidad", 39000),
-  new Producto("Box dia del nino", 28000),
   new Producto("Box porciones de torta", 36000),
-  new Producto("Box alfajores", 20000)
+  new Producto("Box alfajores", 18000)
 ];
 
 // Agregando los productos al objeto global de la pasteleria
@@ -86,6 +88,13 @@ window.pasteleriaMartti = pasteleriaMartti;
 
 //---------------- Interaccion UI
 
+// FUNCION PARA IDENTIFICAR BOTONES DE AGREGAR AL CARRITO (HELPER GLOBAL)
+function esBotonAgregarAlCarrito(button) {
+  if (!button) return false;
+  if (button.dataset && button.dataset.action === "add-to-cart") return true;
+  return /agregar al carrito/i.test(button.textContent || "");
+}
+
 //FUNCION PRINCIPAL: INICIALIZACION DE FUNCIONES AL CARGAR EL DOM, COMO EL MENU RESPONSIVE Y LA CARGA DE RESEÑAS
 function inicializarMain() {
   console.log("Main.js cargado correctamente");
@@ -95,7 +104,7 @@ function inicializarMain() {
 
 
 
-//FUNCIONES AUXILIARES:
+
 
 // FUNCION PARA INICIALIZAR EL MENU RESPONSIVE 
 /*
@@ -184,18 +193,28 @@ function cargarResenas() {
   ];
 
 
-  // FUNCION PARA ACTUALIZAR EL MENSAJE DE ESTADO DE LA INTERFAZ
-  function setStatus(mensaje) {
-    if (!status) return;
-    if (!mensaje) {
-      status.hidden = true;
+  // FUNCION PARA ACTUALIZAR EL MENSAJE DE ESTADO EN LA INTERFAZ DE USUARIO
+  function actualizarEstadoInterfaz(textoMensaje) {
+    // Si no existe el elemento de estado, salir de la función
+    if (!status) {
+      console.log("Elemento de estado no encontrado, no se puede actualizar.");
       return;
     }
+
+    // Si no hay mensaje, ocultar el estado
+    if (!textoMensaje) {
+      status.hidden = true;
+      console.log("Estado ocultado porque no hay mensaje.");
+      return;
+    }
+
+    // Si hay mensaje, mostrarlo
     status.hidden = false;
-    status.textContent = mensaje;
+    status.textContent = textoMensaje;
+    console.log(`Estado actualizado con mensaje: "${textoMensaje}"`);
   }
 
-  setStatus("Cargando resenas...");
+  actualizarEstadoInterfaz("Cargando reseñas...");
 
 
   // FUNCION PARA SELECCIONAR UN ELEMENTO ALEATORIO DE UNA LISTA, UTILIZADA PARA GENERAR RESEÑAS VARIADAS A PARTIR DE PLANTILLAS Y DETALLES PREDEFINIDOS
@@ -219,25 +238,37 @@ function cargarResenas() {
     return detallesPasteleria[indice];
   }
 
-  // FUNCION PARA OBTENER UN NOMBRE ALEATORIO A PARTIR DE UN USUARIO
-  function renderStars(rating) {
-    let stars = "";
+  // FUNCION PARA GENERAR ESTRELLAS VISUALES BASADAS EN UNA CALIFICACION POR "LIKES" OBTENIDA DE LA API DE DUMMYJSON
+  function generarEstrellas(calificacion) {
+    let estrellas = "";
     for (let i = 1; i <= 5; i += 1) {
-      const clase = i <= rating ? "star filled" : "star empty";
-      stars += `<span class="star ${clase}" aria-hidden="true">★</span>`;
+      const clase = i <= calificacion ? "star filled" : "star empty";
+      estrellas += `<span class="star ${clase}" aria-hidden="true">★</span>`;
     }
     return (
-      `<div class="review-rating" aria-label="Calificacion: ${rating} de 5">` +
-        stars +
-        `<span class="sr-only">Calificacion: ${rating} de 5</span>` +
+      `<div class="review-rating" aria-label="Calificacion: ${calificacion} de 5">` +
+      estrellas +
+      `<span class="sr-only">Calificacion: ${calificacion} de 5</span>` +
       `</div>`
     );
   }
 
   //USO DE FETCH PARA SIMULAR CONSULTA A API EXTERNA DE RESEÑAS Y USUARIOS
+  //Aquí utilizo all para hacer ambas consultas de datos en paralelo y luego procesarlos juntos
   Promise.all([
-    fetch("https://dummyjson.com/comments?limit=" + cantidad).then((res) => res.json()),
-    fetch("https://randomuser.me/api/?results=" + cantidad + "&nat=es,ar").then((res) => res.json())
+    /*Uso de API de dummyjson para aportar likes para calcular las estrellas de cada
+     reseña, el comentario para hacerlo mas real y que los comentarios sean en español
+     y referidos a productos de pastelería, los muestro como cards con contenido crado
+     de manera manual y aleatoria
+    */
+    fetch("https://dummyjson.com/comments?limit=" + cantidad).then((respuesta) => respuesta.json()),
+    /*
+    Uso de API de randomuser para aportar avatar y ciudad para cada usuario, 
+    los nombres los genero de manera manual para que sean comunes en español, 
+    y asi aportar mas realismo a las reseñas, y las fotos de las personas
+    si se obtienen de la API
+    */
+    fetch("https://randomuser.me/api/?results=" + cantidad + "&nat=es,ar").then((respuesta) => respuesta.json())
   ])
     .then(([comentariosData, usuariosData]) => {
       const comentarios = Array.isArray(comentariosData?.comments) ? comentariosData.comments : [];
@@ -248,7 +279,7 @@ function cargarResenas() {
         setStatus("No se pudieron cargar reseñas.");
         return;
       }
-
+      // Armado de cards de reseñas utilizando los datos obtenidos de ambas APIs, combinados con los productos y detalles predefinidos:
       const html = comentarios.slice(0, total).map((comentario, index) => {
         const usuario = usuarios[index] || {};
         const nombre = nombresEspanol[index % nombresEspanol.length];
@@ -259,28 +290,28 @@ function cargarResenas() {
         const cuerpo = armarResena(producto, detalle);
         const likes = Number(comentario.likes || 0);
         const rating = Math.min(5, Math.max(3, Math.round(likes / 10) + 3));
-
+        // Lo que se muestra en las cards de reseñas
         return (
           `<article class="review-card">` +
-            `<div class="review-header">` +
-              (avatar ? `<img class="review-avatar" src="${escapeHtml(avatar)}" alt="Foto de ${escapeHtml(nombre)}" loading="lazy">` : "") +
-              `<div class="review-user">` +
-                `<h3 class="review-name">${escapeHtml(nombre)}</h3>` +
-                `<p class="review-meta">Cliente de ${escapeHtml(ciudad)} - Recomienda ${escapeHtml(producto)}</p>` +
-              `</div>` +
-            `</div>` +
-            `<p class="review-body">${escapeHtml(cuerpo)}</p>` +
-            renderStars(rating) +
+          `<div class="review-header">` +
+          (avatar ? `<img class="review-avatar" src="${escapeHtml(avatar)}" alt="Foto de ${escapeHtml(nombre)}" loading="lazy">` : "") +
+          `<div class="review-user">` +
+          `<h3 class="review-name">${escapeHtml(nombre)}</h3>` +
+          `<p class="review-meta">Cliente de ${escapeHtml(ciudad)} - Recomienda ${escapeHtml(producto)}</p>` +
+          `</div>` +
+          `</div>` +
+          `<p class="review-body">${escapeHtml(cuerpo)}</p>` +
+          generarEstrellas(rating) +
           `</article>`
         );
       }).join("");
 
       grid.innerHTML = html;
-      setStatus("");
+      actualizarEstadoInterfaz("");
     })
     .catch((error) => {
-      console.error("Error cargando resenas:", error);
-      setStatus("No se pudieron cargar resenas.");
+      console.error("Error cargando reseñas:", error);
+      actualizarEstadoInterfaz("No se pudieron cargar reseñas.");
     });
 }
 

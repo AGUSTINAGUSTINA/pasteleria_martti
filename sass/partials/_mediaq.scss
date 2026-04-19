@@ -50,16 +50,23 @@ p, li, a { font-family: $p; font-size: $size-p; }
 @include mobile {
   .container { padding: 0 0.75rem; }
   h1 { font-size: 28px; }
-  h2 { font-size: 22px; }
+  h2 { font-size: 20px; }
   h3 { font-size: 18px; }
   p { font-size: 16px; }
 
   // Productos
+  .section-title h1 { font-size: 18px; margin-left: 0.3 px;}
+  .section-title { margin-bottom: 1rem; margin-top: 1rem; }
+  .section-title::before { width: 30px; }
   .product-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .product-card { width: 100% !important; max-width: 420px; height: auto !important; padding: 0.6rem; margin: 0 auto; }
-  .product-card img { height: auto; object-fit: cover; }
-  .product-card-title { height: auto; min-height: 180px; }
-  .product-label, .product-label-featured { width: auto; left: 50%; transform: translateX(-50%); padding: 0.5rem 1rem; }
+  .product-card { width: 100% !important; max-width: 420px; aspect-ratio: 4 / 3 !important; padding: 0.6rem; margin: 0 auto; }
+  .product-card img { width: 100%; height: 100%; object-fit: cover; }
+  .product-card-title { height: 160px; min-height: 160px; aspect-ratio: 4 / 3; }
+  .product-card-title img { width: 100%; height: 100%; object-fit: cover; }
+  .product-card-category { height: 97px; }
+  .product-card-category h3 { font-size: 20px; }
+  .products-grid-category { gap: 0.4rem; }
+  .product-label, .product-label-featured { width: 75%; left: 50%; transform: translateX(-50%); padding: 0.5rem 0.3rem; }
 
   // Productos destacados / grid
   .grid-products { grid-template-columns: 1fr; }
@@ -67,15 +74,18 @@ p, li, a { font-family: $p; font-size: $size-p; }
   .products-grid-featured { gap: 1rem; }
   .product-card-featured { width: 100%; max-width: 360px; margin: 0 auto; }
   .reviews { padding: 3rem 1.25rem; }
+  .reviews h2 { font-size: 20px; }
   .reviews-grid { grid-template-columns: 1fr; }
   .review-card { padding: 1.25rem; }
 
   // Hero / logo content
-  .logo-content { padding: 1.2rem 1.5rem; border-width: 2px; }
-  .intro-text { margin: 2rem auto; padding: 0 1rem; }
-  .intro-text h2 { font-size: 28px; }
+  .logo-content { padding: 0.05rem 0.05rem 0.1rem 1rem; border-width: 2px; top: 50% !important; }
+  .logo-content h1 { margin-top: 2rem; }
+  .logo-float img { width: 80%; }
+  .intro-text { margin: 2rem auto; padding: 2 1rem; }
+  .intro-text h2 { font-size: 20px; }
 
-  // Detalle de producto: apilar en móvil
+  // Detalle de producto: apilar en mobile
   .producto-detalle { flex-direction: column; gap: 16px; padding: 16px; }
   .producto-detalle .galeria { width: 100%; padding-left: 0; }
   .producto-detalle .galeria .imagen-grande { width: 100%; height: auto; }

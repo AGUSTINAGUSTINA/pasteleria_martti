@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chipa | Martti</title>
+    <title>Chipá | Martti</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -30,7 +30,7 @@
 
     <header class="header">
         <nav class="navbar">
-            <button class="nav-toggle" type="button" aria-label="Abrir men�" aria-expanded="false">
+            <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
                 <span class="nav-toggle-bar"></span>
                 <span class="nav-toggle-bar"></span>
                 <span class="nav-toggle-bar"></span>
@@ -83,36 +83,34 @@
             <section class="products-grid-title">
                 <article class="product-card-title">
                     <img src="../../../assets/product/chipa.png" alt="Chipa">
-                    <h1>Chipa</h1>
+                    <h1>Chipá</h1>
                 </article>
             </section>
 
             <section id="chipa" class="product">
-                <div class="product-grid">
+                 <!-- GALERIA CHIPÁ-->
 
-                    <a href="../chipa/producto-1.html" class="product-link">
-                        <article class="product-card" data-name="producto-1">
-                            <div class="product-label">Producto 1</div>
-                            <img src="../../../assets/product/chipa/producto-1.png" alt="Producto 1">
-                        </article>
-                    </a>
+        <div class="producto-detalle">
 
-                    <a href="../chipa/producto-2.html" class="product-link">
-                        <article class="product-card" data-name="producto-2">
-                            <div class="product-label">Producto 2</div>
-                            <img src="../../../assets/product/chipa/producto-2.png" alt="Producto 2">
-                        </article>
-                    </a>
+            <div class="galeria">
+                <img id="imagenPrincipal" src="../../../assets/product/chipa/chipas.png" class="imagen-grande">
 
-                    <a href="../chipa/producto-3.html" class="product-link">
-                        <article class="product-card" data-name="producto-3">
-                            <div class="product-label">Producto 3</div>
-                            <img src="../../../assets/product/chipa/producto-3.png" alt="Producto 3">
-                        </article>
-                    </a>
-
+                <div class="miniaturas">
+                    <img src="../../../assets/product/chipa/abriendo-chipa.png" class="miniatura">
+                    <img src="../../../assets/product/chipa/chipa-abierto.png" class="miniatura">
                 </div>
-            </section>
+            </div>
+
+            <div class="info-producto">
+                <h2>Chipá</h2>
+                <p> Nuestro chipá está hecho con una receta auténtica que respeta su esencia: crocante por fuera, suave y elástico por dentro, con ese sabor intenso a queso que se derrite en cada bocado. Recién horneado, tibio y con una textura irresistible, es el equilibrio perfecto entre tradición y placer.</p>
+                <h3>$3000</h3>
+                <button type="button" data-action="add-to-cart" data-product="Chipá" data-price="3000" data-category="chipas">
+                    Agregar al carrito
+                </button>
+            </div>
+
+        </div>
 
         </main>
 
@@ -171,5 +169,7 @@
         <script src="../../../js/main.js"></script>
         <script src="../../../js/search.js"></script>
         <script src="../../../js/cart.js"></script>
+        <script src="../../../js/ui/gallery.js"></script>
+        <script src="../../../js/cantidad.js"></script>
 
     </body>

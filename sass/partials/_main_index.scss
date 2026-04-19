@@ -39,11 +39,44 @@
   text-align: center;
 
   /* RECTÁNGULO */
-  padding: 3rem 10rem;
+  padding: 2rem 3rem;
   border: 3px solid $blanco;
   background-color: transparent;
 
-  width: fit-content;   
+  width: fit-content;
+
+  h1 {
+    font-size: 48px;
+  }
+
+  @media (max-width: 1024px) and (min-width: 576px) {
+    padding: 2.5rem 2rem;
+    width: 80%;
+    max-width: 500px;
+    
+    h1 {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    
+    h1 {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 2rem;
+    border: 2px solid $blanco;
+    width: 85%;
+    max-width: 360px;
+    
+    h1 {
+      font-size: 22px;
+    }
+  }
 }
 
 .intro-text {
@@ -54,7 +87,7 @@
 
   h2 {
     font-family: $h;
-    font-size: 45px;
+    font-size: 36px;
     margin-bottom: 1rem;
   }
 
